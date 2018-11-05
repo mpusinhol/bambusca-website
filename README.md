@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `gulp`
+
+For hot reload the styles on the website.
+
 ### `npm start`
 
 Runs the app in the development mode.<br>
