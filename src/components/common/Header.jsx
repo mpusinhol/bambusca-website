@@ -6,11 +6,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem 
+  NavLink
 } from 'reactstrap';
 
 class Header extends Component {
@@ -30,34 +26,28 @@ class Header extends Component {
   render() {
     return (
       <div id="header">
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Bambusca</NavbarBrand>
+        <Navbar className="header-navbar" light expand="md">
+          <NavbarBrand href="/">
+            <img className="logo" alt="Logo" src="/assets/images/logo.png"/>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Components</NavLink>
+                <NavLink href="/">
+                  <img alt="Facebook" src="/assets/images/facebook.png"/>
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                <NavLink href="/">
+                  <img alt="Twitter" src="/assets/images/twitter.png"/>
+                </NavLink>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Option 2
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <NavItem>
+                <NavLink href="/">
+                  <img alt="Instagram" src="/assets/images/instagram.png"/>
+                </NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

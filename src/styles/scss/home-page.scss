@@ -1,0 +1,28 @@
+#home-page {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+
+  background-image: url("/assets/images/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  h1 {
+    margin: 5% auto 0 auto;
+    width: 522px;
+    height: 78px;
+    color: #ffffff;
+    font-size: 56px;
+
+    .buscador {
+      font-family: "Rounded Mplus 1c Light";
+      font-weight: 300;
+    }
+
+    .flexivel {
+      font-family: "Rounded Mplus 1c Black";
+      font-weight: 900;
+    }
+    
+  }
+}
