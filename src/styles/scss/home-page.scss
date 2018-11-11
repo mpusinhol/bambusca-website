@@ -1,5 +1,6 @@
 #home-page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   overflow: hidden;
 
@@ -24,5 +25,84 @@
       font-weight: 900;
     }
     
+  }
+  .form-bambusca{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .form-field{
+      width: 50%;
+
+      .check-radio{
+        color: #ffffff;
+        font-family: Raleway;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 21px;
+        
+      }
+      .align-origin-destiny{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .field{
+          width: 49%;
+        }
+      }
+      .align{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .month{
+          width: 49%;
+        }
+
+        .adults-children-babies{
+          width: 49%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+
+          .size{
+            width: 31%;
+          }
+        }
+      }
+    }
+    p{
+      text-align: center;
+      text-transform: uppercase;
+      color: white;
+    }
+    .travel-days{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      .size{
+        width: 10%;
+      }
+
+      p{
+        text-align: center;
+        margin-top: 1%;
+        margin-right: 1%;
+        margin-left: 1%;
+
+      }
+    }
+    button.align{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    button{
+      text-transform: uppercase;
+    }
   }
 }
