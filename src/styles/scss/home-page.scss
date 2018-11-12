@@ -9,8 +9,7 @@
   background-size: cover;
 
   h1 {
-    margin: 5% auto 0 auto;
-    width: 522px;
+    margin: -100px auto 100px auto;
     height: 78px;
     color: #ffffff;
     font-size: 56px;
@@ -27,21 +26,38 @@
     
   }
   .form-bambusca{
+    // margin-top: 150px;
     width: 100%;
     display: flex;
     justify-content: center;
 
+    input[type="radio"] {
+      -ms-transform: scale(1.5); /* IE 9 */
+      -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+      transform: scale(1.5);
+  }
+
+    .check-radio-one-way{
+      color: #ffffff;
+      font-family: Raleway;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 21px;
+      
+    }
+    .check-radio-roundtrip{
+      width: 112px;
+      color: #ffffff;
+      font-family: Raleway;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 21px;
+      
+    }
+
     .form-field{
       width: 50%;
 
-      .check-radio{
-        color: #ffffff;
-        font-family: Raleway;
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 21px;
-        
-      }
       .align-origin-destiny{
         width: 100%;
         display: flex;
@@ -49,6 +65,17 @@
         justify-content: space-between;
         .field{
           width: 49%;
+          color: #9b9b9b;
+          font-family: "Rounded Mplus 1c Medium";
+          font-size: 16px;
+          font-weight: 500;
+          
+          .text{
+            color: #9b9b9b;
+            font-family: "Rounded Mplus 1c Medium";
+            font-size: 16px;
+            font-weight: 500;
+          }
         }
       }
       .align{
@@ -59,6 +86,12 @@
 
         .month{
           width: 49%;
+          .text{
+            color: #9b9b9b;
+            font-family: "Rounded Mplus 1c Medium";
+            font-size: 16px;
+            font-weight: 500;
+          }
         }
 
         .adults-children-babies{
@@ -66,6 +99,13 @@
           display: flex;
           flex-direction: row;
           justify-content: space-between;
+
+          .text{
+            color: #9b9b9b;
+            font-family: "Rounded Mplus 1c Medium";
+            font-size: 14px;
+            font-weight: 500;
+          }
 
           .size{
             width: 31%;
@@ -78,10 +118,19 @@
       text-transform: uppercase;
       color: white;
     }
+    .background{
+      background-color: #6c6c6c;
+      width: 47%;
+      margin: 0 auto 2%;
+    }
     .travel-days{
       display: flex;
       flex-direction: row;
       justify-content: center;
+
+      p{
+        font-weight: 700;
+      }
 
       .size{
         width: 10%;
