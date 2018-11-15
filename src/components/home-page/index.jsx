@@ -23,23 +23,27 @@ class App extends Component {
   render() {
     return (
       <div id="home-page" >
-        <h1>
-          <div className="row text-center">
-            <p className="buscador">Buscador</p>
-            &nbsp;
-            <p className="flexivel">Flexível</p>
-          </div>
-        </h1>
+        <div class="phrase">
+          <p className="buscador">Aperte o cinto, sua passagem ideal está na próxima tela.</p>
+          {/* &nbsp; */}
+          <p className="flexivel">Bambusque!</p>
+        </div>
 
-        <form className="form-bambusca">
-          <div className="form-group form-field">
-            <div class="form-check form-check-inline check-radio-one-way">
-              <input class="form-check-input " type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
-              <label class="form-check-label" for="inlineRadio1">Só Ida</label>
-            </div>
-            <div class="form-check form-check-inline check-radio-roundtrip">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
-              <label class="form-check-label" for="inlineRadio2">Ida e Volta</label>
+        <div className="form-bambusca">
+
+          <form>
+
+            <div className="check-roundtrip">
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
+                <label class="form-check-label check-radio-one-way" for="inlineRadio1">Só Ida</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
+                <label class="form-check-label check-radio-roundtrip" for="inlineRadio2">Ida e Volta</label>
+              </div>
+
             </div>
 
             <div className="align-origin-destiny">
@@ -51,7 +55,8 @@ class App extends Component {
               </div>
             </div>
 
-            <div className="align">
+            <div className="align-month-adult-children-baby">
+
               <div className="month">
                 <select class="custom-select text">
                   <option selected={this.state.selectedMonth == 0}>Selecione o mês de partida</option>
@@ -71,21 +76,21 @@ class App extends Component {
               </div>
 
               <div class="adults-children-babies">
-                <div class="form-group size">
+                <div class="size">
                   <input type="number" class="form-control text" id="number-of-adults" placeholder="Adultos" />
                 </div>
-                <div class="form-group size">
+                <div class="size">
                   <input type="number" class="form-control text" id="number-of-children" placeholder="Crianças" />
                 </div>
-                <div class="form-group size">
+                <div class="size">
                   <input type="number" class="form-control text" id="number-of-babies" placeholder="Bebês" />
                 </div>
               </div>
             </div>
 
-            <p class="background">
+            <p class="how-long">
               Por quantos dias deseja viajar?
-            </p>
+              </p>
 
             <div className="travel-days" >
 
@@ -93,24 +98,25 @@ class App extends Component {
                 De
               </p>
               <div class="form-group size">
-                <input type="number" class="form-control" id="initial-day" placeholder="15" />
+                <input type="number" class="form-control" id="initial-day" />
               </div>
               <p>
                 À
               </p>
               <div class="form-group size">
-                <input type="number" class="form-control" id="end-day" placeholder="18" />
+                <input type="number" class="form-control" id="end-day" />
               </div>
               <p>
                 Dias
               </p>
             </div>
-            <div className="button.align">
-              <button type="button">Bambuscar</button>
+            <div className="button-align">
+              <button type="submit">Bambuscar!</button>
             </div>
 
-          </div>
-        </form>
+          </form>
+        </div>
+
       </div>
     );
   }

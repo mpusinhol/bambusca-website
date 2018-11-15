@@ -3,33 +3,67 @@
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
+  margin:0;
 
   background-image: url("/assets/images/background.png");
   background-repeat: no-repeat;
   background-size: cover;
 
-  h1 {
-    margin: -100px auto 100px auto;
-    height: 78px;
+  .phrase {
     color: #ffffff;
-    font-size: 56px;
+    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2% auto;
 
     .buscador {
+      text-align: center;
       font-family: "Rounded Mplus 1c Light";
       font-weight: 300;
     }
 
     .flexivel {
+      text-align: center;
       font-family: "Rounded Mplus 1c Black";
       font-weight: 900;
     }
-    
   }
-  .form-bambusca{
-    // margin-top: 150px;
+
+  .form-bambusca {
     width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: center;
+
+    form{
+      width: 53%;
+    }
+
+    .check-roundtrip {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      margin-bottom: 15px;
+
+      .check-radio-one-way{
+        color: #ffffff;
+        font-family: Raleway;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 21px;
+        margin-right: 20px;
+      }
+      .check-radio-roundtrip{
+        width: 112px;
+        color: #ffffff;
+        font-family: Raleway;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 21px;
+        
+      }
+    }
 
     input[type="radio"] {
       -ms-transform: scale(1.5); /* IE 9 */
@@ -37,96 +71,78 @@
       transform: scale(1.5);
   }
 
-    .check-radio-one-way{
-      color: #ffffff;
-      font-family: Raleway;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 21px;
+    .align-origin-destiny {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
       
-    }
-    .check-radio-roundtrip{
-      width: 112px;
-      color: #ffffff;
-      font-family: Raleway;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 21px;
-      
-    }
+      .field{
+        width: 49%;        
+        border: 1px solid #9b9b9b;
+        border-radius: 5px;
 
-    .form-field{
-      width: 50%;
-
-      .align-origin-destiny{
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        .field{
-          width: 49%;
-          color: #9b9b9b;
-          font-family: "Rounded Mplus 1c Medium";
-          font-size: 16px;
-          font-weight: 500;
-          
-          .text{
-            color: #9b9b9b;
-            font-family: "Rounded Mplus 1c Medium";
-            font-size: 16px;
-            font-weight: 500;
-          }
-        }
       }
-      .align{
-        width: 100%;
+
+      input{
+        font-family: "Rounded Mplus 1c Medium";
+        font-weight: 800;
+        color: #9b9b9b;
+      }
+
+      label{
+        font-family: "Rounded Mplus 1c Medium";
+        color: #9b9b9b;
+        font-weight: 500;
+      }
+    }
+
+    .align-month-adult-children-baby {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+
+      .month{
+        width: 49%;
+      }
+
+      .adults-children-babies{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        width: 49%;
 
-        .month{
-          width: 49%;
-          .text{
-            color: #9b9b9b;
-            font-family: "Rounded Mplus 1c Medium";
-            font-size: 16px;
-            font-weight: 500;
-          }
-        }
-
-        .adults-children-babies{
-          width: 49%;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-
-          .text{
-            color: #9b9b9b;
+        .size{
+          width: 31%;
+          color: #9b9b9b;
             font-family: "Rounded Mplus 1c Medium";
             font-size: 14px;
             font-weight: 500;
-          }
-
-          .size{
-            width: 31%;
-          }
         }
       }
     }
-    p{
+
+    .how-long{
       text-align: center;
       text-transform: uppercase;
       color: white;
-    }
-    .background{
       background-color: #6c6c6c;
-      width: 47%;
-      margin: 0 auto 2%;
+      width: 385px;
+      margin: 4% auto 2%;
+      
+      font-weight: 900;
+      font-size: 20px;
     }
+
     .travel-days{
       display: flex;
       flex-direction: row;
       justify-content: center;
+      text-align: center;
+      text-transform: uppercase;
+      color: white;
+      font-family: "Rounded Mplus 1c Bold";
+      font-size: 20px;
 
       p{
         font-weight: 700;
@@ -144,14 +160,24 @@
 
       }
     }
-    button.align{
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-    }
-    button{
+
+    .button-align{
+      text-align: center;
       text-transform: uppercase;
+      button{
+        text-align: center;
+        text-transform: uppercase;
+        background-color: #98fd4f;
+        border-radius: 5px;
+        box-shadow:  0 1px 12px rgba(12, 12, 12, 0.66);
+        color: #ffffff;
+        font-family: "Rounded Mplus 1c Black";
+        
+        // box-shadow: 0 1px 12px rgba(12, 12, 12, 0.66);
+        // border-radius: 5px;
+        // background-color: #98fd4f;
+      }
     }
   }
+  
 }
