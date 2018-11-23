@@ -32,7 +32,7 @@ class App extends Component {
       <div id="home-page">
         <div className="title">
           <h1>Aperte o cinto, sua passagem ideal está na próxima tela.</h1>
-          <h1>Bambusque!</h1>
+          <h1 className="bambusque">Bambusque!</h1>
         </div>
         <div className="row justify-content-center">
           <div className="col-10">
@@ -56,9 +56,9 @@ class App extends Component {
                 </div>
               </div>
 
-              <div className="form-row">
-                <div className="form-group col-md-3">
-                  <select className="custom-select">
+              <div className="form-row font">
+                <div className="form-group col-md-3 font">
+                  <select className="custom-select font">
                     <option value="" disabled selected hidden>Selecione o mês de partida</option>
                     <option value="Janeiro">Janeiro</option>
                     <option value="Fevereiro">Fevereiro</option>

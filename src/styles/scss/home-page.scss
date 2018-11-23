@@ -17,13 +17,25 @@
     font-size: 35px;
     text-align: center;
     color: white;
+    font-weight: 600;
+    font-family: "Rounded Mplus 1c Light";
+    
+  }
+  .bambusque{
+    font-size: 40px;
     font-weight: 900;
+    font-family: "Rounded Mplus 1c Black";
   }
   form{
     margin-top: 40px;
 
+    .font{
+      font-family: "Rounded Mplus 1c Medium";
+    }
+
     .origin-destiny {
       margin-bottom: 10px;
+      font-family: "Rounded Mplus 1c Medium";
     }
 
     .radio-margin{
@@ -39,6 +51,7 @@
       font-size: 22px;
       color: #ffffff;
       font-weight: 700;
+      font-family: "Raleway Medium";
     }
 
     .how-long{
@@ -46,7 +59,8 @@
       text-transform: uppercase;
       font-size: 24px;
       color: white;
-      font-weight: 700;
+      font-weight: 100;
+      font-family: "Rounded Mplus 1c Black";
     }
     .align-text-amount{
       display: flex;
@@ -56,6 +70,7 @@
       color: white;
       font-size: 20px;
       font-weight: 600;
+      font-family: "Rounded Mplus 1c Bold";
     }
 
     .align-button{
@@ -68,6 +83,7 @@
         font-weight: 900;
         font-size: 20px;
         background-color: greenyellow;
+        font-family: "Rounded Mplus 1c Black";
       }
     }
   }
