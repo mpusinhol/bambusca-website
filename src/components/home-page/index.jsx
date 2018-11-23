@@ -9,9 +9,11 @@ class App extends Component {
     super(props);
 
     this.state = {
-      selectedMonth: new Date().getM
+      // selectedMonth: new Date().getM
     }
+    // this.handleClick = this.handleClick.bind(this);
   }
+
   componentDidMount() {
     // Call action example:
     // this.props.actions.getUsers();
@@ -20,38 +22,43 @@ class App extends Component {
     // console.log(this.props.user);
   }
 
+  handleClick(){
+    console.log("OI!");
+    // this.props.history.push('/')
+  }
+
   render() {
     return (
       <div id="home-page">
-        <div class="title">
+        <div className="title">
           <h1>Aperte o cinto, sua passagem ideal está na próxima tela.</h1>
           <h1>Bambusque!</h1>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-10">
-            <form class="form">
+        <div className="row justify-content-center">
+          <div className="col-10">
+            <form className="form">
 
-              <div class="form-check form-check-inline radio-margin">
-                <input class="form-check-input" type="radio" id="inlineRadio1" value="Ida" />
-                <label class="form-check-label check" for="inlineRadio1">Só Ida</label>
+              <div className="form-check form-check-inline radio-margin">
+                <input className="form-check-input" type="radio" id="inlineRadio1" value="Ida" />
+                <label className="form-check-label check" for="inlineRadio1">Só Ida</label>
               </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" value="Ida e Volta" />
-                <label class="form-check-label check" for="inlineRadio2">Ida e Volta</label>
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" id="inlineRadio2" value="Ida e Volta" />
+                <label className="form-check-label check" for="inlineRadio2">Ida e Volta</label>
               </div>
 
-              <div class="form-row origin-destiny">
-                <div class="col">
-                  <input type="text" class="form-control" placeholder="Origem" />
+              <div className="form-row origin-destiny">
+                <div className="col">
+                  <input type="text" className="form-control" placeholder="Origem" />
                 </div>
-                <div class="col">
-                  <input type="text" class="form-control" placeholder="Destino" />
+                <div className="col">
+                  <input type="text" className="form-control" placeholder="Destino" />
                 </div>
               </div>
 
-              <div class="form-row">
-                <div class="form-group col-md-3">
-                  <select class="custom-select">
+              <div className="form-row">
+                <div className="form-group col-md-3">
+                  <select className="custom-select">
                     <option value="" disabled selected hidden>Selecione o mês de partida</option>
                     <option value="Janeiro">Janeiro</option>
                     <option value="Fevereiro">Fevereiro</option>
@@ -68,8 +75,8 @@ class App extends Component {
                   </select>
                 </div>
 
-                <div class="form-group col-md-3">
-                  <select class="custom-select">
+                <div className="form-group col-md-3">
+                  <select className="custom-select">
                     <option value="" disabled selected hidden>Selecione o ano da partida</option>
                     <option value="2018">2018</option>
                     <option value="2019">2019</option>
@@ -77,43 +84,44 @@ class App extends Component {
                   </select>
                 </div>
 
-                <div class="form-group col-md-2">
-                  <input type="number" class="form-control" placeholder="Adultos" />
+                <div className="form-group col-md-2">
+                  <input type="number" className="form-control" placeholder="Adultos" />
                 </div>
-                <div class="form-group col-md-2">
-                  <input type="number" class="form-control" placeholder="Crianças" />
+                <div className="form-group col-md-2">
+                  <input type="number" className="form-control" placeholder="Crianças" />
                 </div>
-                <div class="form-group col-md-2">
-                  <input type="number" class="form-control" placeholder="Bebês" />
+                <div className="form-group col-md-2">
+                  <input type="number" className="form-control" placeholder="Bebês" />
                 </div>
               </div>
 
-              <p class="how-long">Por quantos dias deseja viajar?</p>
+              <p className="how-long">Por quantos dias deseja viajar?</p>
 
 
-              <div class="form-row justify-content-center">
-                <div class="align-text-amount">
+              <div className="form-row justify-content-center">
+                <div className="align-text-amount">
                   <p>DE</p>
                 </div>
 
-                <div class="form-group col-md-1">
-                  <input type="number" class="form-control" />
+                <div className="form-group col-md-1">
+                  <input type="number" className="form-control" />
                 </div>
-                <div class="align-text-amount">
+                <div className="align-text-amount">
                   <p>À</p>
                 </div>
 
-                <div class="form-group col-md-1">
-                  <input type="number" class="form-control" />
+                <div className="form-group col-md-1">
+                  <input type="number" className="form-control" />
                 </div>
 
-                <div class="align-text-amount">
+                <div className="align-text-amount">
                   <p>DIAS</p>
                 </div>
 
               </div>
-              <div class="align-button">
-                <button type="submit" class="btn btn-success text">BAMBUSCAR!</button>
+              <div className="align-button">
+                <button type="submit" className="btn btn-success text"
+                  onClick={this.handleClick()}>BAMBUSCAR!</button>
               </div>
 
             </form>
