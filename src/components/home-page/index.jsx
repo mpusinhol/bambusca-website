@@ -22,101 +22,104 @@ class App extends Component {
 
   render() {
     return (
-      <div id="home-page" >
-        <div class="phrase">
-          <p className="buscador">Aperte o cinto, sua passagem ideal está na próxima tela.</p>
-          {/* &nbsp; */}
-          <p className="flexivel">Bambusque!</p>
+      <div id="home-page">
+        <div class="title">
+          <h1>Aperte o cinto, sua passagem ideal está na próxima tela.</h1>
+          <h1>Bambusque!</h1>
         </div>
+        <div class="row justify-content-center">
+          <div class="col-10">
+            <form class="form">
 
-        <div className="form-bambusca">
-
-          <form>
-
-            <div className="check-roundtrip">
-
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
-                <label class="form-check-label check-radio-one-way" for="inlineRadio1">Só Ida</label>
+              <div class="form-check form-check-inline radio-margin">
+                <input class="form-check-input" type="radio" id="inlineRadio1" value="Ida" />
+                <label class="form-check-label check" for="inlineRadio1">Só Ida</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
-                <label class="form-check-label check-radio-roundtrip" for="inlineRadio2">Ida e Volta</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="inlineRadio2" value="Ida e Volta" />
+                <label class="form-check-label check" for="inlineRadio2">Ida e Volta</label>
               </div>
 
-            </div>
-
-            <div className="align-origin-destiny">
-              <div class="form-group field">
-                <input type="text" class="form-control text" id="origin" placeholder="Origem" />
-              </div>
-              <div class="form-group field">
-                <input type="text" class="form-control text" id="destiny" placeholder="Destino" />
-              </div>
-            </div>
-
-            <div className="align-month-adult-children-baby">
-
-              <div className="month">
-                <select class="custom-select text">
-                  <option selected={this.state.selectedMonth == 0}>Selecione o mês de partida</option>
-                  <option value="1">Janeiro</option>
-                  <option value="2">Fevereiro</option>
-                  <option value="3">Março</option>
-                  <option value="4">Abril</option>
-                  <option value="5">Maio</option>
-                  <option value="6">Junho</option>
-                  <option value="7">Julho</option>
-                  <option value="8">Agosto</option>
-                  <option value="9">Setembro</option>
-                  <option value="10">Outubro</option>
-                  <option value="11">Novembro</option>
-                  <option value="12">Dezembro</option>
-                </select>
-              </div>
-
-              <div class="adults-children-babies">
-                <div class="size">
-                  <input type="number" class="form-control text" id="number-of-adults" placeholder="Adultos" />
+              <div class="form-row origin-destiny">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Origem" />
                 </div>
-                <div class="size">
-                  <input type="number" class="form-control text" id="number-of-children" placeholder="Crianças" />
-                </div>
-                <div class="size">
-                  <input type="number" class="form-control text" id="number-of-babies" placeholder="Bebês" />
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Destino" />
                 </div>
               </div>
-            </div>
 
-            <p class="how-long">
-              Por quantos dias deseja viajar?
-              </p>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <select class="custom-select">
+                    <option value="" disabled selected hidden>Selecione o mês de partida</option>
+                    <option value="Janeiro">Janeiro</option>
+                    <option value="Fevereiro">Fevereiro</option>
+                    <option value="Março">Março</option>
+                    <option value="Abril">Abril</option>
+                    <option value="Maio">Maio</option>
+                    <option value="Junho">Junho</option>
+                    <option value="Julho">Julho</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Setembro">Setembro</option>
+                    <option value="Outubro">Outubro</option>
+                    <option value="Novembro">Novembro</option>
+                    <option value="Dezembro">Dezembro</option>
+                  </select>
+                </div>
 
-            <div className="travel-days" >
+                <div class="form-group col-md-3">
+                  <select class="custom-select">
+                    <option value="" disabled selected hidden>Selecione o ano da partida</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                  </select>
+                </div>
 
-              <p>
-                De
-              </p>
-              <div class="form-group size">
-                <input type="number" class="form-control" id="initial-day" />
+                <div class="form-group col-md-2">
+                  <input type="number" class="form-control" placeholder="Adultos" />
+                </div>
+                <div class="form-group col-md-2">
+                  <input type="number" class="form-control" placeholder="Crianças" />
+                </div>
+                <div class="form-group col-md-2">
+                  <input type="number" class="form-control" placeholder="Bebês" />
+                </div>
               </div>
-              <p>
-                À
-              </p>
-              <div class="form-group size">
-                <input type="number" class="form-control" id="end-day" />
-              </div>
-              <p>
-                Dias
-              </p>
-            </div>
-            <div className="button-align">
-              <button type="submit">Bambuscar!</button>
-            </div>
 
-          </form>
+              <p class="how-long">Por quantos dias deseja viajar?</p>
+
+
+              <div class="form-row justify-content-center">
+                <div class="align-text-amount">
+                  <p>DE</p>
+                </div>
+
+                <div class="form-group col-md-1">
+                  <input type="number" class="form-control" />
+                </div>
+                <div class="align-text-amount">
+                  <p>À</p>
+                </div>
+
+                <div class="form-group col-md-1">
+                  <input type="number" class="form-control" />
+                </div>
+
+                <div class="align-text-amount">
+                  <p>DIAS</p>
+                </div>
+
+              </div>
+              <div class="align-button">
+                <button type="submit" class="btn btn-success text">BAMBUSCAR!</button>
+              </div>
+
+            </form>
+
+          </div>
         </div>
-
       </div>
     );
   }
