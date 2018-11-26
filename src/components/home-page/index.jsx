@@ -14,11 +14,11 @@ class App extends Component {
       destiny: '',
       month: '',
       year: '',
-      adults: null,
-      children: null,
-      babies: null,
-      minDays: null,
-      maxDays: null
+      adults: '',
+      children: '',
+      babies: '',
+      minDays: '',
+      maxDays: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
