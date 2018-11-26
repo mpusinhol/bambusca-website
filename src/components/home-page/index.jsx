@@ -9,9 +9,19 @@ class App extends Component {
     super(props);
 
     this.state = {
-      // selectedMonth: new Date().getM
+      isRoundTrip: 'Ida',
+      origin: '',
+      destiny: '',
+      month: '',
+      year: '',
+      adults: null,
+      children: null,
+      babies: null,
+      minDays: null,
+      maxDays: null
     }
-    // this.handleClick = this.handleClick.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -23,8 +33,10 @@ class App extends Component {
   }
 
   handleClick(){
-    console.log("OI!");
-    // this.props.history.push('/')
+  }
+
+  handleChange(evt) {
+    this.setState({ [evt.target.name]: evt.target.value });
   }
 
   render() {
@@ -35,30 +47,64 @@ class App extends Component {
           <h1 className="bambusque">Bambusque!</h1>
         </div>
         <div className="row justify-content-center">
-          <div className="col-10">
+          <div className="col-8">
             <form className="form">
 
               <div className="form-check form-check-inline radio-margin">
-                <input className="form-check-input" type="radio" id="inlineRadio1" value="Ida" />
+                <input 
+                  className="form-check-input"
+                  type="radio" 
+                  name="inlineRadioOptions"
+                  id="inlineRadio1"
+                  onChange={this.handleChange}
+                  value="Ida"
+                  defaultChecked={this.state.isRoundTrip ==="Ida"}
+                />
                 <label className="form-check-label check" for="inlineRadio1">Só Ida</label>
               </div>
               <div className="form-check form-check-inline">
-                <input className="form-check-input" type="radio" id="inlineRadio2" value="Ida e Volta" />
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="inlineRadio2"
+                  value="Ida e Volta"
+                  defaultChecked={this.state.isRoundTrip ==="Ida e Volta"}
+                />
                 <label className="form-check-label check" for="inlineRadio2">Ida e Volta</label>
               </div>
 
               <div className="form-row origin-destiny">
                 <div className="col">
-                  <input type="text" className="form-control" placeholder="Origem" />
+                  <input
+                    type="text"
+                    className="form-control" 
+                    placeholder="Origem"
+                    name="origin"
+                    onChange={this.handleChange}
+                    value={this.state.origin}
+                  />
                 </div>
                 <div className="col">
-                  <input type="text" className="form-control" placeholder="Destino" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Destino"
+                    name="destiny"
+                    onChange={this.handleChange}
+                    value={this.state.destiny}
+                  />
                 </div>
               </div>
 
               <div className="form-row font">
                 <div className="form-group col-md-3 font">
-                  <select className="custom-select font">
+                  <select
+                    className="custom-select font"
+                    name="month"
+                    onChange={this.handleChange}
+                    value={this.state.month}>
+
                     <option value="" disabled selected hidden>Selecione o mês de partida</option>
                     <option value="Janeiro">Janeiro</option>
                     <option value="Fevereiro">Fevereiro</option>
@@ -76,7 +122,11 @@ class App extends Component {
                 </div>
 
                 <div className="form-group col-md-3">
-                  <select className="custom-select">
+                  <select
+                    className="custom-select"
+                    name="year"
+                    onChange={this.handleChange}
+                    value={this.state.year} >
                     <option value="" disabled selected hidden>Selecione o ano da partida</option>
                     <option value="2018">2018</option>
                     <option value="2019">2019</option>
@@ -85,13 +135,34 @@ class App extends Component {
                 </div>
 
                 <div className="form-group col-md-2">
-                  <input type="number" className="form-control" placeholder="Adultos" />
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Adultos"
+                    name="adults"
+                    onChange={this.handleChange}
+                    value={this.state.adults}  
+                  />
                 </div>
                 <div className="form-group col-md-2">
-                  <input type="number" className="form-control" placeholder="Crianças" />
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Crianças"
+                    name="children"
+                    onChange={this.handleChange}
+                    value={this.state.children}
+                    />
                 </div>
                 <div className="form-group col-md-2">
-                  <input type="number" className="form-control" placeholder="Bebês" />
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Bebês"
+                    name="babies"
+                    onChange={this.handleChange}
+                    value={this.state.babies}
+                  />
                 </div>
               </div>
 
@@ -104,14 +175,26 @@ class App extends Component {
                 </div>
 
                 <div className="form-group col-md-1">
-                  <input type="number" className="form-control" />
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="minDays"
+                    onChange={this.handleChange}
+                    value={this.state.minDays}
+                  />
                 </div>
                 <div className="align-text-amount">
                   <p>À</p>
                 </div>
 
                 <div className="form-group col-md-1">
-                  <input type="number" className="form-control" />
+                  <input
+                    type="number" 
+                    className="form-control"
+                    name="maxDays"
+                    onChange={this.handleChange}
+                    value={this.state.maxDays}
+                  />
                 </div>
 
                 <div className="align-text-amount">
@@ -121,7 +204,7 @@ class App extends Component {
               </div>
               <div className="align-button">
                 <button type="submit" className="btn btn-success text"
-                  onClick={this.handleClick()}>BAMBUSCAR!</button>
+                  onClick={() => this.handleClick()}>BAMBUSCAR!</button>
               </div>
 
             </form>

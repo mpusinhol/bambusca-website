@@ -3,33 +3,34 @@
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  margin:0;
+  margin: 0;
 
   background-image: url("/assets/images/background.png");
   background-repeat: no-repeat;
   background-size: cover;
 
-  .title{
+  .title {
     margin-top: 40px;
   }
 
-  h1{
+  h1 {
     font-size: 35px;
     text-align: center;
     color: white;
     font-weight: 600;
     font-family: "Rounded Mplus 1c Light";
-    
   }
-  .bambusque{
+
+  .bambusque {
     font-size: 40px;
     font-weight: 900;
     font-family: "Rounded Mplus 1c Black";
   }
-  form{
+
+  form {
     margin-top: 40px;
 
-    .font{
+    .font {
       font-family: "Rounded Mplus 1c Medium";
     }
 
@@ -38,23 +39,24 @@
       font-family: "Rounded Mplus 1c Medium";
     }
 
-    .radio-margin{
+    .radio-margin {
       margin-bottom: 15px;
     }
+
     input[type="radio"] {
       -ms-transform: scale(1.5); /* IE 9 */
       -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
       transform: scale(1.5);
     }
 
-    .check{
+    .check {
       font-size: 22px;
       color: #ffffff;
       font-weight: 700;
       font-family: "Raleway Medium";
     }
 
-    .how-long{
+    .how-long {
       text-align: center;
       text-transform: uppercase;
       font-size: 24px;
@@ -62,7 +64,8 @@
       font-weight: 100;
       font-family: "Rounded Mplus 1c Black";
     }
-    .align-text-amount{
+
+    .align-text-amount {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -73,13 +76,13 @@
       font-family: "Rounded Mplus 1c Bold";
     }
 
-    .align-button{
+    .align-button {
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-content: center;
 
-      .text{
+      .text {
         font-weight: 900;
         font-size: 20px;
         background-color: greenyellow;
