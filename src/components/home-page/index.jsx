@@ -9,10 +9,10 @@ class App extends Component {
     super(props);
 
     this.state = {
-      isRoundTrip: 'Ida',
+      isRoundTrip: true,
       origin: '',
       destiny: '',
-      month: '',
+      month: '5',
       year: '',
       adults: '',
       children: '',
@@ -58,7 +58,7 @@ class App extends Component {
                   id="inlineRadio1"
                   onChange={this.handleChange}
                   value="Ida"
-                  defaultChecked={this.state.isRoundTrip ==="Ida"}
+                  defaultChecked={this.state.isRoundTrip === false}
                 />
                 <label className="form-check-label check" for="inlineRadio1">Só Ida</label>
               </div>
@@ -69,7 +69,7 @@ class App extends Component {
                   name="inlineRadioOptions"
                   id="inlineRadio2"
                   value="Ida e Volta"
-                  defaultChecked={this.state.isRoundTrip ==="Ida e Volta"}
+                  defaultChecked={this.state.isRoundTrip}
                 />
                 <label className="form-check-label check" for="inlineRadio2">Ida e Volta</label>
               </div>
@@ -105,19 +105,19 @@ class App extends Component {
                     onChange={this.handleChange}
                     value={this.state.month}>
 
-                    <option value="" disabled selected hidden>Selecione o mês de partida</option>
-                    <option value="Janeiro">Janeiro</option>
-                    <option value="Fevereiro">Fevereiro</option>
-                    <option value="Março">Março</option>
-                    <option value="Abril">Abril</option>
-                    <option value="Maio">Maio</option>
-                    <option value="Junho">Junho</option>
-                    <option value="Julho">Julho</option>
-                    <option value="Agosto">Agosto</option>
-                    <option value="Setembro">Setembro</option>
-                    <option value="Outubro">Outubro</option>
-                    <option value="Novembro">Novembro</option>
-                    <option value="Dezembro">Dezembro</option>
+                    <option value="0" disabled selected hidden>Selecione o mês de partida</option>
+                    <option value="1">Janeiro</option>
+                    <option value="2">Fevereiro</option>
+                    <option value="3">Março</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Maio</option>
+                    <option value="6">Junho</option>
+                    <option value="7">Julho</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
                   </select>
                 </div>
 
