@@ -4,9 +4,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 // import { withRouter } from 'react-router';
 
 import Home from './components/home-page/index';
+import Calendar from './components/calendar/index';
 
 export default (
   <Switch>
-    <Route path="/" component={Home}   />
+    <Route path="/" component={Calendar}   />
   </Switch>
 );
