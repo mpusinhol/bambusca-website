@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getUsers } from '../../actions/example-actions';
+import Autocomplete from '../autocomplete/index';
 
 class App extends Component {
   constructor(props) {
@@ -10,8 +10,8 @@ class App extends Component {
 
     this.state = {
       isRoundTrip: true,
-      origin: '',
-      destiny: '',
+      origin: {},
+      destination: {},
       month: '5',
       year: '',
       adults: '',
@@ -22,17 +22,6 @@ class App extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  componentDidMount() {
-    // Call action example:
-    // this.props.actions.getUsers();
-
-    // Use users from redux example:
-    // console.log(this.props.user);
-  }
-
-  handleClick(){
   }
 
   handleChange(evt) {
@@ -76,23 +65,15 @@ class App extends Component {
 
               <div className="form-row origin-destiny">
                 <div className="col">
-                  <input
-                    type="text"
-                    className="form-control" 
+                  <Autocomplete
                     placeholder="Origem"
-                    name="origin"
-                    onChange={this.handleChange}
-                    value={this.state.origin}
+                    onSelectCallback={option => this.setState({origin: option})}
                   />
                 </div>
                 <div className="col">
-                  <input
-                    type="text"
-                    className="form-control"
+                  <Autocomplete
                     placeholder="Destino"
-                    name="destiny"
-                    onChange={this.handleChange}
-                    value={this.state.destiny}
+                    onSelectCallback={option => this.setState({destination: option})}
                   />
                 </div>
               </div>
@@ -169,7 +150,7 @@ class App extends Component {
               <p className="how-long">Por quantos dias deseja viajar?</p>
 
 
-              <div className="form-row justify-content-center">
+              <div className="form-row justify-content-center" style={{marginTop: "15px"}}>
                 <div className="align-text-amount">
                   <p>DE</p>
                 </div>
@@ -222,10 +203,4 @@ function mapStateToProps(state) {
   };
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Object.assign({}, { getUsers }), dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

@@ -5,7 +5,7 @@ import ViajanetApi from '../../api/viajanetApi';
 
 const customStyles = {
   input: styles => ({ ...styles, width: 500, cursor: "text"}),
-  option: styles => ({ ...styles, fontWeight: "600"})
+  option: styles => ({ ...styles, fontWeight: "900", cursor: "pointer", fontSize: "18px"})
 }
 
 export default class Autocomplete extends Component {

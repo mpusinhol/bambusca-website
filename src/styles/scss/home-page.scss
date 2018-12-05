@@ -9,10 +9,6 @@
   background-repeat: no-repeat;
   background-size: cover;
 
-  .title {
-    margin-top: 40px;
-  }
-
   h1 {
     font-size: 35px;
     text-align: center;
@@ -29,6 +25,7 @@
 
   form {
     margin-top: 40px;
+    font-size: 20px;
 
     .font {
       font-family: "Rounded Mplus 1c Medium";
@@ -59,10 +56,12 @@
     .how-long {
       text-align: center;
       text-transform: uppercase;
-      font-size: 24px;
       color: white;
       font-weight: 100;
       font-family: "Rounded Mplus 1c Black";
+      background-color: #6c6c6c;
+      width: 40%;
+      margin: 0 auto;
     }
 
     .align-text-amount {
@@ -84,9 +83,10 @@
 
       .text {
         font-weight: 900;
-        font-size: 20px;
-        background-color: greenyellow;
+        font-size: 25px;
+        background-color: #98fd4f;
         font-family: "Rounded Mplus 1c Black";
+        border-radius: 5px;
       }
     }
   }
