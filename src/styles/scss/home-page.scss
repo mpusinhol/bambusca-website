@@ -1,28 +1,93 @@
 #home-page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   overflow: hidden;
+  margin: 0;
 
   background-image: url("/assets/images/background.png");
   background-repeat: no-repeat;
   background-size: cover;
 
+  .title {
+    margin-top: 40px;
+  }
+
   h1 {
-    margin: 5% auto 0 auto;
-    width: 522px;
-    height: 78px;
-    color: #ffffff;
-    font-size: 56px;
+    font-size: 35px;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-family: "Rounded Mplus 1c Light";
+  }
 
-    .buscador {
-      font-family: "Rounded Mplus 1c Light";
-      font-weight: 300;
+  .bambusque {
+    font-size: 40px;
+    font-weight: 900;
+    font-family: "Rounded Mplus 1c Black";
+  }
+
+  form {
+    margin-top: 40px;
+
+    .font {
+      font-family: "Rounded Mplus 1c Medium";
     }
 
-    .flexivel {
+    .origin-destiny {
+      margin-bottom: 10px;
+      font-family: "Rounded Mplus 1c Medium";
+    }
+
+    .radio-margin {
+      margin-bottom: 15px;
+    }
+
+    input[type="radio"] {
+      -ms-transform: scale(1.5); /* IE 9 */
+      -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+      transform: scale(1.5);
+    }
+
+    .check {
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: 700;
+      font-family: "Raleway Medium";
+    }
+
+    .how-long {
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 24px;
+      color: white;
+      font-weight: 100;
       font-family: "Rounded Mplus 1c Black";
-      font-weight: 900;
     }
-    
+
+    .align-text-amount {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      color: white;
+      font-size: 20px;
+      font-weight: 900;
+      font-family: "Rounded Mplus 1c Black";
+    }
+
+    .align-button {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-content: center;
+
+      .text {
+        font-weight: 900;
+        font-size: 20px;
+        background-color: greenyellow;
+        font-family: "Rounded Mplus 1c Black";
+      }
+    }
   }
 }
