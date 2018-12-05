@@ -44,3 +44,27 @@
     }
   }
 }
+
+#autocomplete {
+  .autocomplete-box {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    background-color: white;
+    // transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    width: inherit;
+
+    .item {
+      width: inherit;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #ced4da;
+      }
+
+      span {
+        width: inherit;
+      }
+    }
+  }
+}
