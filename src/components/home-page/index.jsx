@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Autocomplete from '../autocomplete/index';
-
 import { getUsers } from '../../actions/example-actions';
-
-const autcompleteStyles = {
-    width: "300px"
-};
 
 class App extends Component {
   componentDidMount() {
@@ -29,9 +23,6 @@ class App extends Component {
             <p className="flexivel">Flexível</p>
           </div>
         </h1>
-        <div className="form" style={{margin: "10px 200px 0 0"}}>
-          <Autocomplete styles={autcompleteStyles}/>
-        </div>
       </div>
     );
   }
