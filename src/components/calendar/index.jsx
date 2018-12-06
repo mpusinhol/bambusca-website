@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import events from "./events";
-import Calendar from "react-big-calendar";
+import BigCalendar from "react-big-calendar";
 import moment from "moment";
 
-Calendar.setLocalizer(Calendar.momentLocalizer(moment));
+import "react-big-calendar/lib/css/react-big-calendar.css";
+require('globalize/lib/cultures/globalize.culture.fr');
+
+const localizer = BigCalendar.momentLocalizer(moment) 
 
 class App extends Component {
     constructor(props) {
@@ -31,12 +34,14 @@ class App extends Component {
         };
         return (
             <div className="calendar">
-                <Calendar
+                <BigCalendar
+                    localizer={localizer}
                     popup
                     components={components}
                     defaultDate={new Date()}
                     events={events}
                     onSelectEvent={this.openEvent}
+                    culture={'fr'}
                 />
             </div>
         );
