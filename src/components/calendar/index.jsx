@@ -7,15 +7,24 @@ import BigCalendar from "react-big-calendar";
 import moment from "moment";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
-require('globalize/lib/cultures/globalize.culture.fr');
 
-const localizer = BigCalendar.momentLocalizer(moment) 
+//require('globalize/lib/cultures/globalize.culture.fr');
+
+moment.locale('pt-BR');
+const localizer = BigCalendar.momentLocalizer(moment); 
 
 class App extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {}
+        this.state = {
+            //month, day, year
+            date: new Date('11/11/2018')
+        }
+
+        console.log(localizer);
+        console.log(moment().month("January"));
+        console.log(this.state.date)
     }
 
     MyDateCell = props => {
@@ -36,12 +45,16 @@ class App extends Component {
             <div className="calendar">
                 <BigCalendar
                     localizer={localizer}
+                    date={this.state.date}
+                    onNavigate={date => this.setState({ date })}
                     popup
                     components={components}
-                    defaultDate={new Date()}
+                    defaultDate={this.state.date}
                     events={events}
-                    onSelectEvent={this.openEvent}
-                    culture={'fr'}
+                    // onSelectEvent={this.openEvent}
+                    view={'month'}
+                    views={['month']}
+                    toolbar={false}
                 />
             </div>
         );
