@@ -1,9 +1,12 @@
 export default [
     {
-      'title': 'All Day Event very long title',
-      'allDay': true,
-      'start': new Date(2015, 3, 0),
-      'end': new Date(2015, 3, 1)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '4000',
+      //month, day, year
+      'start': new Date('12/12/2018'),
+      'end': new Date('12/12/2018')
     },
     {
       'title': 'Long Event',

@@ -19,21 +19,30 @@ class App extends Component {
 
         this.state = {
             //month, day, year
-            date: new Date('11/11/2018')
+            date: new Date('12/12/2018')
         }
-
-        console.log(localizer);
-        console.log(moment().month("January"));
-        console.log(this.state.date)
     }
 
     MyDateCell = props => {
         console.log(props);
         return (
-            <span>
-                {props.event.title}
-                <br />
-            </span>
+            <div className="encapsulated">
+
+                <div className="price">
+                    R$ {props.event.price}
+                </div>
+                
+                <div className="date">
+                    Ida: {props.event.initialDate}
+                </div>
+                
+                <div className="date">
+                    Volta: {props.event.endDate}
+                </div>
+                
+            </div>
+                
+
         );
     };
 
@@ -43,6 +52,9 @@ class App extends Component {
         };
         return (
             <div className="calendar">
+            {/* Se for usar a data atual, não passar date e nem onNavigate 
+                Localizer é obrigatório
+            */}
                 <BigCalendar
                     localizer={localizer}
                     date={this.state.date}
@@ -55,6 +67,22 @@ class App extends Component {
                     view={'month'}
                     views={['month']}
                     toolbar={false}
+
+                    // eventPropGetter={
+                    //     (event, start, end) => {
+                    //       let newStyle = {
+                    //         backgroundColor: "blue",  
+                    //         color: '#9ACD32',
+                    //         borderRadius: "0px",
+                    //         border: "none"
+                    //       };
+                    
+                    //       return {
+                    //         className: "",
+                    //         style: newStyle
+                    //       };
+                    //     }
+                    //   }
                 />
             </div>
         );

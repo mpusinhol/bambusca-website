@@ -6,3 +6,16 @@
     height: 900px;
     overflow: hidden;
 }
+
+.encapsulated{
+    text-align: center;
+
+    .date{
+        font-size: 16px;
+    }
+
+    .price{
+        font-size: 24px;
+        color: #98fd4f;
+    }
+}
