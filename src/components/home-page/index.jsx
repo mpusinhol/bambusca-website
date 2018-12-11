@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux';
 
 import Autocomplete from '../autocomplete/index';
 
-class App extends Component {
+import { getBestPriceTrip } from '../../actions/viajanetActions';
+
+class Home extends Component {
   constructor(props) {
     super(props);
 
@@ -22,6 +24,15 @@ class App extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.actions.getBestPriceTrip({
+      originIATA: "SAO",
+      destinationIATA: "MIA",
+      isRoundTrip: false,
+      departureDate: "2018-12-20"
+    });
   }
 
   handleChange(evt) {
@@ -199,8 +210,15 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    users: state.Example
+    users: state.Example,
+    viajanet: state.Viajanet,
   };
 };
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Object.assign({}, { getBestPriceTrip }), dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
