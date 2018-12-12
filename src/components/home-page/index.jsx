@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
+import MonthPickerInput from 'react-month-picker-input';
 
 import Autocomplete from '../autocomplete/index';
 
 import { getBestPriceTrip } from '../../actions/viajanetActions';
+
+import {DEFAULT_I18N} from './i18n.ts';
 
 class Home extends Component {
   constructor(props) {
@@ -14,13 +18,13 @@ class Home extends Component {
       isRoundTrip: true,
       origin: {},
       destination: {},
-      month: '5',
-      year: '',
-      adults: '',
-      children: '',
-      babies: '',
-      minDays: '',
-      maxDays: ''
+      month: moment().month(),
+      year: moment().year(),
+      adults: undefined,
+      children: undefined,
+      babies: undefined,
+      minDays: undefined,
+      maxDays: undefined
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -47,18 +51,16 @@ class Home extends Component {
           <h1 className="bambusque">Bambusque!</h1>
         </div>
         <div className="row justify-content-center">
-          <div className="col-8">
+        <div className="col-8">
             <form className="form">
-
               <div className="form-check form-check-inline radio-margin">
-                <input 
+                <input
                   className="form-check-input"
                   type="radio" 
                   name="inlineRadioOptions"
                   id="inlineRadio1"
-                  onChange={this.handleChange}
-                  value="Ida"
-                  defaultChecked={this.state.isRoundTrip === false}
+                  checked={!this.state.isRoundTrip}
+                  onClick={() => this.setState({isRoundTrip: false})}
                 />
                 <label className="form-check-label check" for="inlineRadio1">Só Ida</label>
               </div>
@@ -68,8 +70,8 @@ class Home extends Component {
                   type="radio"
                   name="inlineRadioOptions"
                   id="inlineRadio2"
-                  value="Ida e Volta"
-                  defaultChecked={this.state.isRoundTrip}
+                  checked={this.state.isRoundTrip}
+                  onClick={() => this.setState({isRoundTrip: true})}
                 />
                 <label className="form-check-label check" for="inlineRadio2">Ida e Volta</label>
               </div>
@@ -90,42 +92,18 @@ class Home extends Component {
               </div>
 
               <div className="form-row font">
-                <div className="form-group col-md-3 font">
-                  <select
-                    className="custom-select font"
-                    name="month"
-                    onChange={this.handleChange}
-                    value={this.state.month}>
-
-                    <option value="0" disabled selected hidden>Selecione o mês de partida</option>
-                    <option value="1">Janeiro</option>
-                    <option value="2">Fevereiro</option>
-                    <option value="3">Março</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Maio</option>
-                    <option value="6">Junho</option>
-                    <option value="7">Julho</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Setembro</option>
-                    <option value="10">Outubro</option>
-                    <option value="11">Novembro</option>
-                    <option value="12">Dezembro</option>
-                  </select>
+                <div className="form-group col-md-6 month-picker">
+                <MonthPickerInput
+                  ref="picker"
+                  year={this.state.year}
+                  month={this.state.month}
+                  i18n={DEFAULT_I18N}
+                  closeOnSelect
+                  onChange={(maskedValue, selectedYear, selectedMonth) =>
+                    this.setState({month: selectedMonth, year: selectedYear})
+                  }
+                />
                 </div>
-
-                <div className="form-group col-md-3">
-                  <select
-                    className="custom-select"
-                    name="year"
-                    onChange={this.handleChange}
-                    value={this.state.year} >
-                    <option value="" disabled selected hidden>Selecione o ano da partida</option>
-                    <option value="2018">2018</option>
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                  </select>
-                </div>
-
                 <div className="form-group col-md-2">
                   <input
                     type="number"
@@ -161,7 +139,7 @@ class Home extends Component {
               <p className="how-long">Por quantos dias deseja viajar?</p>
 
 
-              <div className="form-row justify-content-center" style={{marginTop: "15px"}}>
+              <div className="form-row justify-content-center" style={{marginTop: "15px", marginLeft: "15px"}}>
                 <div className="align-text-amount">
                   <p>DE</p>
                 </div>
@@ -198,10 +176,8 @@ class Home extends Component {
                 <button type="submit" className="btn btn-success text"
                   onClick={() => this.handleClick()}>BAMBUSCAR!</button>
               </div>
-
             </form>
-
-          </div>
+            </div>
         </div>
       </div>
     );
