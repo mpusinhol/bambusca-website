@@ -8,16 +8,19 @@ import MonthPickerInput from 'react-month-picker-input';
 
 import Autocomplete from '../autocomplete/index';
 
-import { getBestPriceTrip } from '../../actions/viajanetActions';
+import ViajanetApi from '../../api/viajanetApi';
+import { getBestPriceTrip, onGetBestPriceSuccess, onGetBestPriceFailure } from '../../actions/viajanetActions';
 
 import 'react-toastify/dist/ReactToastify.css';
+
+const REQUEST_DATE_MASK = "YYYY-MM-DD";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isRoundTrip: true,
+      isRoundTrip: false,
       origin: undefined,
       destination: undefined,
       month: moment().month(),
@@ -31,6 +34,7 @@ class Home extends Component {
       errors: {
         origin: undefined,
         destination: undefined,
+        redundantTrip: undefined,
         tripDate: undefined,
         fromTripDays: undefined,
         toTripDays: undefined,
@@ -42,15 +46,75 @@ class Home extends Component {
     this.validateFields = this.validateFields.bind(this);
     this.renderAlertErrors = this.renderAlertErrors.bind(this);
     this.onBambuscarClicked = this.onBambuscarClicked.bind(this);
+    this.fetchBestPrices = this.fetchBestPrices.bind(this);
+    this.getViajanetBestPriceSync = this.getViajanetBestPriceSync.bind(this);
   }
 
-  componentDidMount() {
-    this.props.actions.getBestPriceTrip({
-      originIATA: "SAO",
-      destinationIATA: "MIA",
-      isRoundTrip: false,
-      departureDate: "2018-12-20"
-    });
+  getViajanetBestPriceSync = async (data) => {
+    var PRE_DEFINED_BEST_PRICES_BODY = {
+      LoadLocations: false,
+      LoadAirCompanies: false,
+      OnlyBestAirCompany: false,
+      ResultsAmount: 1
+    };
+
+    PRE_DEFINED_BEST_PRICES_BODY.Origin = data.originIATA;
+    PRE_DEFINED_BEST_PRICES_BODY.Destination = data.destinationIATA;
+    PRE_DEFINED_BEST_PRICES_BODY.StartDeparture = data.departureDate;
+    PRE_DEFINED_BEST_PRICES_BODY.IsRoundTrip = data.isRoundTrip;
+
+    if (data.isRoundTrip) {
+      PRE_DEFINED_BEST_PRICES_BODY.TripDays = data.tripDays;
+    }
+
+    const promise = await ViajanetApi.getBestPriceTrip(PRE_DEFINED_BEST_PRICES_BODY);
+
+    return promise;
+  }
+
+  fetchBestPrices() {
+    const currentDate = moment();
+    let startDate;
+    let numberOfDays = 0;
+
+    if (this.state.month === currentDate.month() && this.state.year === currentDate.year()) {
+      const endOfMonth = currentDate.endOf('month');
+      numberOfDays = endOfMonth.diff(currentDate, 'days');
+      startDate = moment();
+    } else {
+      startDate = moment(`${this.state.year}-${this.state.month}-01`, REQUEST_DATE_MASK);
+      const aux = moment(`${this.state.year}-${this.state.month}-01`, REQUEST_DATE_MASK);
+      numberOfDays = aux.endOf('month').date();
+    }
+
+    let requestBody = {
+      originIATA: this.state.origin.value.IATA,
+      destinationIATA: this.state.destination.value.IATA,
+      isRoundTrip: this.state.isRoundTrip
+    }
+
+    while(startDate.month() === this.state.month) {
+      requestBody.departureDate = startDate.format(REQUEST_DATE_MASK);
+
+      if (this.state.isRoundTrip) {
+        requestBody.tripDays = [this.state.minDays, this.state.maxDays];
+      }
+
+      const promise = this.getViajanetBestPriceSync(requestBody);
+
+      promise
+        .then(response => {
+          if (response && response.data && response.data.BestPricesList) {
+            this.props.actions.onGetBestPriceSuccess(response);
+          }
+        })
+
+      startDate = startDate.add(1, 'day');
+    }
+
+    // toast.warn("Não conseguimos encontrar viagens no momento. Por gentileza, escolha outro destino ou tente mais tarde.", {
+    //   position: toast.POSITION.TOP_RIGHT
+    // });
   };
 
   validateFields() {
@@ -74,6 +138,11 @@ class Home extends Component {
     
     if (!destination) {
       errors.destination = "É preciso selecionar o destino!";
+      formHasErrors = true;
+    }
+
+    if (origin && destination && origin.value.Id === destination.value.Id) {
+      errors.redundantTrip = "O destino precisa ser diferente da origem!";
       formHasErrors = true;
     }
 
@@ -135,7 +204,7 @@ class Home extends Component {
     const errors = this.validateFields();
 
     if(errors === undefined) {
-      
+      this.fetchBestPrices();
     } else {
       toast.error(this.renderAlertErrors(errors), {
         position: toast.POSITION.TOP_RIGHT
@@ -300,7 +369,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Object.assign({}, { getBestPriceTrip }), dispatch)
+    actions: bindActionCreators(Object.assign({}, { getBestPriceTrip, onGetBestPriceSuccess, onGetBestPriceFailure }), dispatch)
   }
 }
 

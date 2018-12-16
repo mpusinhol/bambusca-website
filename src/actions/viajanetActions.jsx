@@ -42,12 +42,11 @@ export function getBestPriceTrip(data) {
 };
 
 export const ON_GET_BEST_PRICE_SUCCESS = "ON_GET_BEST_PRICE_SUCCESS";
-function onGetBestPriceSuccess(response) {
-
+export function onGetBestPriceSuccess(response) {
   return { type: ON_GET_BEST_PRICE_SUCCESS, payload: response.data };
 };
 
 export const ON_GET_BEST_PRICE_FAILURE = "ON_GET_BEST_PRICE_FAILURE";
-function onGetBestPriceFailure(error) {
+export function onGetBestPriceFailure(error) {
   return { type: ON_GET_BEST_PRICE_FAILURE, error };
 };

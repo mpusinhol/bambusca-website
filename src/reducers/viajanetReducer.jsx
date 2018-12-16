@@ -7,6 +7,7 @@ import {
 
 const INITIAL_STATE = {
   bestPrices: {},
+  errors: [],
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -23,7 +24,17 @@ export default function(state = INITIAL_STATE, action) {
       };
     }
 
-    case ON_GET_BEST_PRICE_FAILURE:
+    case ON_GET_BEST_PRICE_FAILURE: {
+      let { errors } = state;
+
+      errors.push(action.error);
+
+      return {
+        ...state,
+        errors
+      }
+    }
+
     default:
       return INITIAL_STATE;
   }
