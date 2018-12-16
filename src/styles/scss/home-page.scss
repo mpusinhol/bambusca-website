@@ -55,6 +55,11 @@
       transform: scale(1.5);
     }
 
+    input::-webkit-input-placeholder {
+      font-size: 20px;
+      line-height: 3;
+    }
+
     .check {
       font-size: 22px;
       color: #ffffff;

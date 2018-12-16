@@ -1,26 +1,3 @@
-export enum DateFormat {
-  'MM/YY',
-  'MM/YYYY',
-  'YY/MM',
-  'YYYY/MM'
-};
-
-export enum MonthFormat {
-  SHORT = 'short',
-  LONG = 'long'
-}
-
-export interface II18n {
-  monthFormat: MonthFormat,
-  dateFormat: object,
-  monthNames: object
-};
-
-export const DATE_FORMAT = {
-  'default': 'MM/YYYY',
-  'ja': 'YY/MM'
-};
-
 const ENGLISH_MONTHS = [
   'January',
   'February',
@@ -141,7 +118,7 @@ export const MONTH_NAMES = {
 };
 
 export const DEFAULT_I18N = {
-  monthFormat: MonthFormat.LONG,
-  dateFormat: DATE_FORMAT,
+  monthFormat: "long",
+  dateFormat: "MM/YYYY",
   monthNames: MONTH_NAMES
 };
