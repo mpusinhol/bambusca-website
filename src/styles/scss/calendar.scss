@@ -1,21 +1,108 @@
-.calendar{
+#body {
+    background-image: url("/assets/images/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .month {
+        padding-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-family: "Rounded Mplus 1c Medium";
+        font-size: 26px;
+        color: white;
+
+        div {
+            margin-left: 40px;
+        }
+
+        .actual-month {
+            font-weight: 900;
+        }
+
+        Button {
+            font-size: 26px;
+            color: white;
+            font-family: "Rounded Mplus 1c Medium";
+        }
+        
+    }
+
+    .day-week {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-left: 12%;
+        margin-right: 12%;
+        margin-top: 20px;
+        color: white;
+        font-family: "Rounded Mplus 1c Bold";
+        font-weight: 900;
+        font-size: 18px;
+        text-transform: uppercase;
+        // background-color: black;
+        // opacity: 0.2;
+    }
+
+}
+
+.rbc-calendar {
+    // margin-top: 30px;
+}
+
+.rbc-month-row {
+    background-color: white;
+}
+
+.rbc-day-bg {
+}
+
+.rbc-month-header {
+    // display: none;
+}
+
+.calendar {
     margin: 0 10%;
-    padding: 20px;
+    padding: 0px 20px 20px;
     box-shadow: 5px grey;
     border-radius: 0.5em;
-    height: 900px;
+    height: 1100px;
     overflow: hidden;
 }
 
-.encapsulated{
+.cell-content {
     text-align: center;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    height: 170px;
+    // background-color: white;
 
-    .date{
+    .date {
         font-size: 16px;
+        font-family: "Rounded Mplus 1c Medium";
+        color: #4a4a4a;
+        font-weight: bold;
     }
 
-    .price{
-        font-size: 24px;
-        color: #98fd4f;
+    .mini-calendar {
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .price {
+        font-size: 28px;
+        color: #32CD32;
+        font-family: "Rounded Mplus 1c Bold";
+        font-weight: 700;
+    }
+    .informations {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-bottom: 0px;
     }
 }

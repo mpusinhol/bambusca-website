@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { Button, Container, Row, Col } from 'reactstrap';
 import events from "./events";
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
@@ -10,8 +11,8 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 //require('globalize/lib/cultures/globalize.culture.fr');
 
-moment.locale('pt-BR');
-const localizer = BigCalendar.momentLocalizer(moment); 
+moment.locale('pt-br');
+const localizer = BigCalendar.momentLocalizer(moment);
 
 class App extends Component {
     constructor(props) {
@@ -19,29 +20,37 @@ class App extends Component {
 
         this.state = {
             //month, day, year
+            //mês que o calendario deve exibir
             date: new Date('12/12/2018')
         }
     }
 
     MyDateCell = props => {
-        console.log(props);
+        console.log(moment);
         return (
-            <div className="encapsulated">
+            <div className="cell-content">
 
                 <div className="price">
                     R$ {props.event.price}
                 </div>
-                
-                <div className="date">
-                    Ida: {props.event.initialDate}
+
+                <div className="informations">
+                    <div className="date">
+                        Volta
+                        <br />
+                        {moment(props.event.endDate).locale('pt-br').format("D/MMM")}
+                    </div>
+
+                    <div className="date mini-calendar">
+                        {props.event.amountDays}
+                        <br />
+                        Dias
+                    </div>
                 </div>
-                
-                <div className="date">
-                    Volta: {props.event.endDate}
-                </div>
-                
+
+
             </div>
-                
+
 
         );
     };
@@ -51,22 +60,44 @@ class App extends Component {
             eventWrapper: this.MyDateCell
         };
         return (
-            <div className="calendar">
-            {/* Se for usar a data atual, não passar date e nem onNavigate 
+
+            <div>
+                <div>
+                    <div className="month">
+                        <Button color="link">Anterior</Button>
+
+                        <Button color="link" className="actual-month">Atual</Button>
+
+                        <Button color="link">Próximo</Button>
+                    </div>
+
+                    {/* <div className="day-week">
+                       <span>Dom</span>
+                       <span>Seg</span>
+                       <span>Ter</span>
+                       <span>Qua</span>
+                       <span>Qui</span>
+                       <span>Sex</span>
+                       <span>Sáb</span>
+                    </div> */}
+                </div>
+
+                <div className="calendar">
+                    {/* Se for usar a data atual, não passar date e nem onNavigate 
                 Localizer é obrigatório
             */}
-                <BigCalendar
-                    localizer={localizer}
-                    date={this.state.date}
-                    onNavigate={date => this.setState({ date })}
-                    popup
-                    components={components}
-                    defaultDate={this.state.date}
-                    events={events}
-                    // onSelectEvent={this.openEvent}
-                    view={'month'}
-                    views={['month']}
-                    toolbar={false}
+                    <BigCalendar
+                        localizer={localizer}
+                        date={this.state.date}
+                        onNavigate={date => this.setState({ date })}
+                        popup
+                        components={components}
+                        defaultDate={this.state.date}
+                        events={events}
+                        // onSelectEvent={this.openEvent}
+                        view={'month'}
+                        views={['month']}
+                        toolbar={false}
 
                     // eventPropGetter={
                     //     (event, start, end) => {
@@ -76,14 +107,15 @@ class App extends Component {
                     //         borderRadius: "0px",
                     //         border: "none"
                     //       };
-                    
+
                     //       return {
                     //         className: "",
                     //         style: newStyle
                     //       };
                     //     }
                     //   }
-                />
+                    />
+                </div>
             </div>
         );
     }

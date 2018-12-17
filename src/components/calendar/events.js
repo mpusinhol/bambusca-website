@@ -4,91 +4,203 @@ export default [
       'endDate': '01/01/2018',
       // 'allDay': true,
       'price': '4000',
+      'amountDays': 14,
       //month, day, year
       'start': new Date('12/12/2018'),
       'end': new Date('12/12/2018')
     },
     {
-      'title': 'Long Event',
-      'start': new Date(2015, 3, 7),
-      'end': new Date(2015, 3, 10)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '4.000,00',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/13/2018'),
+      'end': new Date('12/13/2018')
     },
   
     {
-      'title': 'DTS STARTS',
-      'start': new Date(2016, 2, 13, 0, 0, 0),
-      'end': new Date(2016, 2, 20, 0, 0, 0)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '4000',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/14/2018'),
+      'end': new Date('12/14/2018')
     },
   
     {
-      'title': 'DTS ENDS',
-      'start': new Date(2016, 10, 6, 0, 0, 0),
-      'end': new Date(2016, 10, 13, 0, 0, 0)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '7000',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/12/2018'),
+      'end': new Date('12/12/2018')
     },
   
     {
-      'title': 'Some Event',
-      'start': new Date(2015, 3, 9, 0, 0, 0),
-      'end': new Date(2015, 3, 9, 0, 0, 0)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '1200',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/15/2018'),
+      'end': new Date('12/15/2018')
     },
     {
-      'title': 'Conference',
-      'start': new Date(2015, 3, 11),
-      'end': new Date(2015, 3, 13),
-      desc: 'Big conference for important people'
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '6000',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/16/2018'),
+      'end': new Date('12/16/2018')
     },
     {
-      'title': 'Meeting',
-      'start': new Date(2015, 3, 12, 10, 30, 0, 0),
-      'end': new Date(2015, 3, 12, 12, 30, 0, 0),
-      desc: 'Pre-meeting meeting, to prepare for the meeting'
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '5700',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/17/2018'),
+      'end': new Date('12/17/2018')
     },
     {
-      'title': 'Lunch',
-      'start': new Date(2015, 3, 12, 12, 0, 0, 0),
-      'end': new Date(2015, 3, 12, 13, 0, 0, 0),
-      desc: 'Power lunch'
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/18/2018'),
+      'end': new Date('12/18/2018')
     },
     {
-      'title': 'Meeting',
-      'start': new Date(2015, 3, 12, 14, 0, 0, 0),
-      'end': new Date(2015, 3, 12, 15, 0, 0, 0)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/19/2018'),
+      'end': new Date('12/19/2018')
     },
     {
-      'title': 'Happy Hour',
-      'start': new Date(2015, 3, 12, 17, 0, 0, 0),
-      'end': new Date(2015, 3, 12, 17, 30, 0, 0),
-      desc: 'Most important meal of the day'
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/20/2018'),
+      'end': new Date('12/20/2018')
     },
     {
-      'title': 'Dinner',
-      'start': new Date(2015, 3, 12, 20, 0, 0, 0),
-      'end': new Date(2015, 3, 12, 21, 0, 0, 0)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/21/2018'),
+      'end': new Date('12/21/2018')
     },
     {
-      'title': 'Birthday Party',
-      'start': new Date(2015, 3, 13, 7, 0, 0),
-      'end': new Date(2015, 3, 13, 10, 30, 0)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/23/2018'),
+      'end': new Date('12/23/2018')
     },
     {
-      'title': 'Birthday Party 2',
-      'start': new Date(2015, 3, 13, 7, 0, 0),
-      'end': new Date(2015, 3, 13, 10, 30, 0)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/24/2018'),
+      'end': new Date('12/24/2018')
     },
     {
-      'title': 'Birthday Party 3',
-      'start': new Date(2015, 3, 13, 7, 0, 0),
-      'end': new Date(2015, 3, 13, 10, 30, 0)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/25/2018'),
+      'end': new Date('12/25/2018')
     },
     {
-      'title': 'Late Night Event',
-      'start': new Date(2015, 3, 17, 19, 30, 0),
-      'end': new Date(2015, 3, 18, 2, 0, 0)
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/26/2018'),
+      'end': new Date('12/26/2018')
     },
     {
-      'title': 'Multi-day Event',
-      'start': new Date(2015, 3, 20, 19, 30, 0),
-      'end': new Date(2015, 3, 22, 2, 0, 0)
-    }
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/27/2018'),
+      'end': new Date('12/27/2018')
+    },
+    {
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/28/2018'),
+      'end': new Date('12/28/2018')
+    },
+    {
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/29/2018'),
+      'end': new Date('12/29/2018')
+    },
+    {
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/30/2018'),
+      'end': new Date('12/30/2018')
+    },
+    {
+      'initialDate': '01/01/2018',
+      'endDate': '01/01/2018',
+      // 'allDay': true,
+      'price': '3500',
+      'amountDays': 14,
+      //month, day, year
+      'start': new Date('12/31/2018'),
+      // 'end': new Date('12/31/2018')
+    },
   ]
   
