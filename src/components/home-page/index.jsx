@@ -61,10 +61,7 @@ class Home extends Component {
       this.props.actions.resetProcessingFlag();
 
       if (nextProps.viajanet.numberOfResultsFound > 0){
-        toast.success("", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        //REDIRECT
+        this.props.history.push('/calendar');
       } else {
         toast.error("Não conseguimos encontrar viagens no momento. Por gentileza, escolha outro destino ou tente mais tarde.", {
           position: toast.POSITION.TOP_RIGHT
@@ -89,7 +86,7 @@ class Home extends Component {
     if (data.isRoundTrip) {
       PRE_DEFINED_BEST_PRICES_BODY.TripDays = data.tripDays;
     }
-debugger
+
     const promise = await ViajanetApi.getBestPriceTrip(PRE_DEFINED_BEST_PRICES_BODY);
 
     return promise;
