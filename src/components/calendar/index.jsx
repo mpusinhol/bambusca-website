@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Container, Row, Col } from 'reactstrap';
-import events from "./events";
+import { Button } from 'reactstrap';
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
 
@@ -20,15 +19,41 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        const bestPrices = this.props.viajanet.bestPrices;
+        const newArray = [];
+        var mydate = '';
+
+        console.log("BestPrice Original")
+        console.log(bestPrices)
+
+        {Object.keys(this.props.viajanet.bestPrices).map(key => (
+            
+            (
+                mydate = moment(key, 'DD/MM/YYYY'),
+                moment(mydate).format("MM/DD/YYYY"),
+                newArray.push({
+                    start: new Date(mydate),
+                    end: new Date(mydate),
+                    price: bestPrices[key].BestPrice.Value,
+                    initialDate: key
+                })
+            )
+
+         ))}
+
+         console.log(newArray)
+
+         console.log(newArray[0].start);
+
+          this.state = {
             //month, day, year
             //mês que o calendario deve exibir
-            date: new Date('12/12/2018')
+            date: new Date(newArray[0].start),
+            newArray: newArray,
         }
     }
 
     MyDateCell = props => {
-        console.log(moment);
         return (
             <div className="cell-content">
 
@@ -99,27 +124,11 @@ class App extends Component {
                         popup
                         components={components}
                         defaultDate={this.state.date}
-                        events={events}
+                        events={this.state.newArray}
                         // onSelectEvent={this.openEvent}
                         view={'month'}
                         views={['month']}
                         toolbar={false}
-
-                    // eventPropGetter={
-                    //     (event, start, end) => {
-                    //       let newStyle = {
-                    //         backgroundColor: "blue",  
-                    //         color: '#9ACD32',
-                    //         borderRadius: "0px",
-                    //         border: "none"
-                    //       };
-
-                    //       return {
-                    //         className: "",
-                    //         style: newStyle
-                    //       };
-                    //     }
-                    //   }
                     />
                 </div>
             </div>
@@ -129,7 +138,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-        users: state.Example
+        viajanet: state.Viajanet,
     };
 };
 
