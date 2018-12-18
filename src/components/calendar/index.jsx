@@ -7,6 +7,8 @@ import events from "./events";
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
 
+import * as FontAwesome from 'react-icons/fa'
+
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 //require('globalize/lib/cultures/globalize.culture.fr');
@@ -66,7 +68,11 @@ class App extends Component {
                     <div className="month">
                         <Button color="link">Anterior</Button>
 
-                        <Button color="link" className="actual-month">Atual</Button>
+                        <FontAwesome.FaAngleLeft />
+
+                        <div className="actual-month">Atual</div>
+
+                        <FontAwesome.FaAngleRight />
 
                         <Button color="link">Próximo</Button>
                     </div>

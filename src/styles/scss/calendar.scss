@@ -8,13 +8,10 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
+        align-items: center;
         font-family: "Rounded Mplus 1c Medium";
         font-size: 26px;
         color: white;
-
-        div {
-            margin-left: 40px;
-        }
 
         .actual-month {
             font-weight: 900;
@@ -46,19 +43,17 @@
 
 }
 
-.rbc-calendar {
-    // margin-top: 30px;
+.rbc-month-header {
+    font-size: 20px;
+    color: white;
 }
 
 .rbc-month-row {
     background-color: white;
 }
 
-.rbc-day-bg {
-}
-
-.rbc-month-header {
-    // display: none;
+.rbc-month-view {
+    border-radius: 10px;
 }
 
 .calendar {
@@ -75,7 +70,7 @@
     justify-content: space-around;
     display: flex;
     flex-direction: column;
-    height: 170px;
+    height: 150px;
     // background-color: white;
 
     .date {
