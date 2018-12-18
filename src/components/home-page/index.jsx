@@ -9,7 +9,13 @@ import MonthPickerInput from 'react-month-picker-input';
 import Autocomplete from '../autocomplete/index';
 
 import ViajanetApi from '../../api/viajanetApi';
-import { getBestPriceTrip, onGetBestPriceSuccess, onGetBestPriceFailure } from '../../actions/viajanetActions';
+import {
+  getBestPriceTrip,
+  onGetBestPriceSuccess,
+  onGetBestPriceFailure,
+  onGetAllBestPrices,
+  resetProcessingFlag
+} from '../../actions/viajanetActions';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -50,6 +56,23 @@ class Home extends Component {
     this.getViajanetBestPriceSync = this.getViajanetBestPriceSync.bind(this);
   }
 
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.viajanet && nextProps.viajanet.hasFinishedProcessing) {
+      this.props.actions.resetProcessingFlag();
+
+      if (nextProps.viajanet.numberOfResultsFound > 0){
+        toast.success("", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        //REDIRECT
+      } else {
+        toast.error("Não conseguimos encontrar viagens no momento. Por gentileza, escolha outro destino ou tente mais tarde.", {
+          position: toast.POSITION.TOP_RIGHT
+        });
+      }
+    }
+  }
+
   getViajanetBestPriceSync = async (data) => {
     var PRE_DEFINED_BEST_PRICES_BODY = {
       LoadLocations: false,
@@ -66,7 +89,7 @@ class Home extends Component {
     if (data.isRoundTrip) {
       PRE_DEFINED_BEST_PRICES_BODY.TripDays = data.tripDays;
     }
-
+debugger
     const promise = await ViajanetApi.getBestPriceTrip(PRE_DEFINED_BEST_PRICES_BODY);
 
     return promise;
@@ -75,16 +98,12 @@ class Home extends Component {
   fetchBestPrices() {
     const currentDate = moment();
     let startDate;
-    let numberOfDays = 0;
+    let promiseArray = [];
 
     if (this.state.month === currentDate.month() && this.state.year === currentDate.year()) {
-      const endOfMonth = currentDate.endOf('month');
-      numberOfDays = endOfMonth.diff(currentDate, 'days');
       startDate = moment();
     } else {
-      startDate = moment(`${this.state.year}-${this.state.month}-01`, REQUEST_DATE_MASK);
-      const aux = moment(`${this.state.year}-${this.state.month}-01`, REQUEST_DATE_MASK);
-      numberOfDays = aux.endOf('month').date();
+      startDate = moment(`${this.state.year}-${this.state.month+1}-01`, REQUEST_DATE_MASK);
     }
 
     let requestBody = {
@@ -101,20 +120,14 @@ class Home extends Component {
       }
 
       const promise = this.getViajanetBestPriceSync(requestBody);
-
-      promise
-        .then(response => {
-          if (response && response.data && response.data.BestPricesList) {
-            this.props.actions.onGetBestPriceSuccess(response);
-          }
-        })
+      promiseArray.push(promise);
 
       startDate = startDate.add(1, 'day');
     }
 
-    // toast.warn("Não conseguimos encontrar viagens no momento. Por gentileza, escolha outro destino ou tente mais tarde.", {
-    //   position: toast.POSITION.TOP_RIGHT
-    // });
+    Promise.all(promiseArray).then(result => {
+      this.props.actions.onGetAllBestPrices(result);
+    });
   };
 
   validateFields() {
@@ -369,7 +382,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Object.assign({}, { getBestPriceTrip, onGetBestPriceSuccess, onGetBestPriceFailure }), dispatch)
+    actions: bindActionCreators(Object.assign({}, {
+      getBestPriceTrip,
+      onGetBestPriceSuccess,
+      onGetBestPriceFailure,
+      onGetAllBestPrices,
+      resetProcessingFlag,
+    }), dispatch)
   }
 }
 

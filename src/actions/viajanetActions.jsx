@@ -50,3 +50,13 @@ export const ON_GET_BEST_PRICE_FAILURE = "ON_GET_BEST_PRICE_FAILURE";
 export function onGetBestPriceFailure(error) {
   return { type: ON_GET_BEST_PRICE_FAILURE, error };
 };
+
+export const ON_GET_ALL_BEST_PRICES = "ON_GET_ALL_BEST_PRICES";
+export function onGetAllBestPrices(response) {
+  return { type: ON_GET_ALL_BEST_PRICES, payload: response };
+}
+
+export const RESET_PROCESSING_FLAG = "RESET_PROCESSING_FLAG";
+export function resetProcessingFlag() {
+  return { type: RESET_PROCESSING_FLAG };
+}
