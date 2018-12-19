@@ -4,13 +4,14 @@ import { bindActionCreators } from 'redux';
 
 import { Button } from 'reactstrap';
 import BigCalendar from "react-big-calendar";
-import moment from "moment";
+// import moment from "moment";
+
+import * as moment from 'moment';
+import * as locales from 'moment/min/locales';
 
 import * as FontAwesome from 'react-icons/fa'
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
-
-//require('globalize/lib/cultures/globalize.culture.fr');
 
 moment.locale('pt-br');
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -26,28 +27,26 @@ class App extends Component {
         console.log("BestPrice Original")
         console.log(bestPrices)
 
-        {Object.keys(this.props.viajanet.bestPrices).map(key => (
-            
-            (
-                mydate = moment(key, 'DD/MM/YYYY'),
-                moment(mydate).format("MM/DD/YYYY"),
-                newArray.push({
-                    start: new Date(mydate),
-                    end: new Date(mydate),
-                    price: bestPrices[key].BestPrice.Value,
-                    initialDate: key
-                })
-            )
+        {
+            Object.keys(this.props.viajanet.bestPrices).map(key => (
 
-         ))}
+                (
+                    mydate = moment(key, 'DD/MM/YYYY'),
+                    moment(mydate).format("MM/DD/YYYY"),
+                    newArray.push({
+                        start: new Date(mydate),
+                        end: new Date(mydate),
+                        price: bestPrices[key].FullPriceTotal,
+                        amountDays: bestPrices[key].TripDays,
+                        initialDate: key,
+                        endDate: bestPrices[key].Arrival
+                    })
+                )
 
-         console.log(newArray)
+            ))
+        }
 
-         console.log(newArray[0].start);
-
-          this.state = {
-            //month, day, year
-            //mês que o calendario deve exibir
+        this.state = {
             date: new Date(newArray[0].start),
             newArray: newArray,
         }
@@ -55,29 +54,29 @@ class App extends Component {
 
     MyDateCell = props => {
         return (
-            <div className="cell-content">
+            <a href="https://www.w3schools.com/html/" target="_blank" rel="noopener noreferrer" >
+                <div className="cell-content">
 
-                <div className="price">
-                    R$ {props.event.price}
-                </div>
-
-                <div className="informations">
-                    <div className="date">
-                        Volta
-                        <br />
-                        {moment(props.event.endDate).locale('pt-br').format("D/MMM")}
+                    <div className="price">
+                        R$ {props.event.price}
                     </div>
 
-                    <div className="date mini-calendar">
-                        {props.event.amountDays}
+                    <div className="informations">
+                        <div className="date">
+                            Volta
                         <br />
-                        Dias
+                            {moment(props.event.endDate).locale('pt-br').format("D/MMM")}
+                        </div>
+
+                        <div className="date mini-calendar">
+                            {props.event.amountDays}
+                            <br />
+                            Dias
+                        </div>
                     </div>
+
                 </div>
-
-
-            </div>
-
+            </a>
 
         );
     };
@@ -95,7 +94,7 @@ class App extends Component {
 
                         <FontAwesome.FaAngleLeft />
 
-                        <div className="actual-month">Atual</div>
+                        <div className="actual-month">{moment(this.state.date).locale('pt-br').format("MMMM")}</div>
 
                         <FontAwesome.FaAngleRight />
 
