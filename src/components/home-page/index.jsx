@@ -7,8 +7,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import MonthPickerInput from 'react-month-picker-input';
 
 import Autocomplete from '../autocomplete/index';
+import Loader from '../common/loader';
 
 import ViajanetApi from '../../api/viajanetApi';
+
 import {
   getBestPriceTrip,
   onGetBestPriceSuccess,
@@ -45,7 +47,8 @@ class Home extends Component {
         fromTripDays: undefined,
         toTripDays: undefined,
         tripDays: undefined
-      }
+      },
+      isProcessing: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -59,6 +62,7 @@ class Home extends Component {
   componentWillReceiveProps = nextProps => {
     if (nextProps.viajanet && nextProps.viajanet.hasFinishedProcessing) {
       this.props.actions.resetProcessingFlag();
+      this.setState({isProcessing: false});
 
       if (nextProps.viajanet.numberOfResultsFound > 0){
         toast.success("", {
@@ -89,7 +93,7 @@ class Home extends Component {
     if (data.isRoundTrip) {
       PRE_DEFINED_BEST_PRICES_BODY.TripDays = data.tripDays;
     }
-debugger
+
     const promise = await ViajanetApi.getBestPriceTrip(PRE_DEFINED_BEST_PRICES_BODY);
 
     return promise;
@@ -217,6 +221,7 @@ debugger
     const errors = this.validateFields();
 
     if(errors === undefined) {
+      this.setState({isProcessing: true});
       this.fetchBestPrices();
     } else {
       toast.error(this.renderAlertErrors(errors), {
@@ -232,6 +237,7 @@ debugger
   render() {
     return (
       <div id="home-page">
+        { this.state.isProcessing ? <Loader/> : null }
         <ToastContainer autoClose={8000} style={{width: "40%"}}/>
         <div className="title">
           <h1>Aperte o cinto, sua passagem ideal está na próxima tela.</h1>
@@ -375,7 +381,6 @@ debugger
 
 function mapStateToProps(state) {
   return {
-    users: state.Example,
     viajanet: state.Viajanet,
   };
 };
