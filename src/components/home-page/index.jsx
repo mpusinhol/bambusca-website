@@ -9,7 +9,7 @@ import MonthPickerInput from 'react-month-picker-input';
 import Autocomplete from '../autocomplete/index';
 import Loader from '../common/loader';
 
-import ViajanetApi from '../../api/viajanetApi';
+import fetchBestPrices from '../../helpers/viajanetHelper';
 
 import {
   getBestPriceTrip,
@@ -20,8 +20,6 @@ import {
 } from '../../actions/viajanetActions';
 
 import 'react-toastify/dist/ReactToastify.css';
-
-const REQUEST_DATE_MASK = "YYYY-MM-DD";
 
 class Home extends Component {
   constructor(props) {
@@ -55,8 +53,6 @@ class Home extends Component {
     this.validateFields = this.validateFields.bind(this);
     this.renderAlertErrors = this.renderAlertErrors.bind(this);
     this.onBambuscarClicked = this.onBambuscarClicked.bind(this);
-    this.fetchBestPrices = this.fetchBestPrices.bind(this);
-    this.getViajanetBestPriceSync = this.getViajanetBestPriceSync.bind(this);
   }
 
   componentWillReceiveProps = nextProps => {
@@ -76,63 +72,6 @@ class Home extends Component {
       }
     }
   }
-
-  getViajanetBestPriceSync = async (data) => {
-    var PRE_DEFINED_BEST_PRICES_BODY = {
-      LoadLocations: false,
-      LoadAirCompanies: false,
-      OnlyBestAirCompany: false,
-      ResultsAmount: 1
-    };
-
-    PRE_DEFINED_BEST_PRICES_BODY.Origin = data.originIATA;
-    PRE_DEFINED_BEST_PRICES_BODY.Destination = data.destinationIATA;
-    PRE_DEFINED_BEST_PRICES_BODY.StartDeparture = data.departureDate;
-    PRE_DEFINED_BEST_PRICES_BODY.IsRoundTrip = data.isRoundTrip;
-
-    if (data.isRoundTrip) {
-      PRE_DEFINED_BEST_PRICES_BODY.TripDays = data.tripDays;
-    }
-
-    const promise = await ViajanetApi.getBestPriceTrip(PRE_DEFINED_BEST_PRICES_BODY);
-
-    return promise;
-  }
-
-  fetchBestPrices() {
-    const currentDate = moment();
-    let startDate;
-    let promiseArray = [];
-
-    if (this.state.month === currentDate.month() && this.state.year === currentDate.year()) {
-      startDate = moment();
-    } else {
-      startDate = moment(`${this.state.year}-${this.state.month+1}-01`, REQUEST_DATE_MASK);
-    }
-
-    let requestBody = {
-      originIATA: this.state.origin.value.IATA,
-      destinationIATA: this.state.destination.value.IATA,
-      isRoundTrip: this.state.isRoundTrip
-    }
-
-    while(startDate.month() === this.state.month) {
-      requestBody.departureDate = startDate.format(REQUEST_DATE_MASK);
-
-      if (this.state.isRoundTrip) {
-        requestBody.tripDays = [this.state.minDays, this.state.maxDays];
-      }
-
-      const promise = this.getViajanetBestPriceSync(requestBody);
-      promiseArray.push(promise);
-
-      startDate = startDate.add(1, 'day');
-    }
-
-    Promise.all(promiseArray).then(result => {
-      this.props.actions.onGetAllBestPrices(result);
-    });
-  };
 
   validateFields() {
     const { origin, destination, month, year, minDays, maxDays } = this.state;
@@ -222,7 +161,20 @@ class Home extends Component {
 
     if(errors === undefined) {
       this.setState({isProcessing: true});
-      this.fetchBestPrices();
+
+      const promises = fetchBestPrices({
+        originIATA: this.state.origin.value.IATA,
+        destinationIATA: this.state.destination.value.IATA,
+        isRoundTrip: this.state.isRoundTrip,
+        month: this.state.month,
+        year: this.state.year,
+        minDays: this.state.minDays,
+        maxDays: this.state.maxDays,
+      });
+
+      promises.then(results => {
+        this.props.actions.onGetAllBestPrices(results);
+      });
     } else {
       toast.error(this.renderAlertErrors(errors), {
         position: toast.POSITION.TOP_RIGHT
