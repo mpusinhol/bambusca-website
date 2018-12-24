@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
+import 'moment/locale/pt-br';
 import { Input, Button, Form, Label } from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
-import MonthPickerInput from 'react-month-picker-input';
+import Monthpicker from '@compeon/monthpicker';
 
 import Autocomplete from '../autocomplete/index';
 import Loader from '../common/loader';
 
 import fetchBestPrices from '../../helpers/viajanetHelper';
+import { capitalizeFirstLetter } from '../../helpers/stringHelper';
 
 import {
   getBestPriceTrip,
@@ -197,6 +199,12 @@ class Home extends Component {
   };
 
   render() {
+    const { year } = this.state;
+    let formattedMonth = moment(this.state.month + 1, 'MM').locale("pt-br").format('MMMM');
+    formattedMonth = capitalizeFirstLetter(formattedMonth);
+
+    const monthPickerValue = `${formattedMonth} de ${year}`;
+
     return (
       <div id="home-page">
         { this.state.isProcessing ? <Loader/> : null }
@@ -248,15 +256,26 @@ class Home extends Component {
 
               <div className="form-row font">
                 <div className="form-group col-md-6 month-picker">
-                <MonthPickerInput
-                  ref="picker"
-                  year={this.state.year}
-                  month={this.state.month}
-                  closeOnSelect
-                  onChange={(maskedValue, selectedYear, selectedMonth) =>
-                    this.setState({month: selectedMonth, year: selectedYear})
-                  }
+                <Monthpicker
+                  format='MM.YYYY'
+                  year={parseInt(this.state.year, 10)}
+                  month={parseInt(this.state.month + 1, 10)}
+                  primaryColor="#98fd4f"
+                  locale="pt-br"
+                  className="month-picker"
+                  allowedYears={{after: moment().year() - 1}}
+                  onChange={(selectedYear) => {
+                    const values = selectedYear.split('.');
+                    this.setState({month: values[0] - 1, year: values[1]})
+                  }}
+                >
+                  <Input
+                    type="text"
+                    className="form-control text-center month-picker-input"
+                    placeholder="Selecione o mês da viagem"
+                    value={monthPickerValue}
                 />
+                </Monthpicker>
                 </div>
                 <div className="form-group col-md-2">
                   <Input
