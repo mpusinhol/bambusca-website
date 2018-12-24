@@ -153,7 +153,7 @@ class Home extends Component {
     for (let key in errors) {
       if (errors[key]) {
         errorArray.push(
-          <span style={{fontSize: "18px"}}>
+          <span key={key} style={{fontSize: "18px"}}>
             {errors[key]}
             <br/>
           </span>
@@ -223,7 +223,7 @@ class Home extends Component {
                   name="inlineRadioOptions"
                   id="inlineRadio1"
                   checked={!this.state.isRoundTrip}
-                  onClick={() => this.setState({isRoundTrip: false})}
+                  onChange={() => this.setState({isRoundTrip: false})}
                 />
                 <Label className="form-check-label check" for="inlineRadio1">Só Ida</Label>
               </div>
@@ -234,7 +234,7 @@ class Home extends Component {
                   name="inlineRadioOptions"
                   id="inlineRadio2"
                   checked={this.state.isRoundTrip}
-                  onClick={() => this.setState({isRoundTrip: true})}
+                  onChange={() => this.setState({isRoundTrip: true})}
                 />
                 <Label className="form-check-label check" for="inlineRadio2">Ida e Volta</Label>
               </div>
@@ -274,7 +274,8 @@ class Home extends Component {
                     className="form-control text-center month-picker-input"
                     placeholder="Selecione o mês da viagem"
                     value={monthPickerValue}
-                />
+                    onChange={() => console.log("")}
+                  />
                 </Monthpicker>
                 </div>
                 <div className="form-group col-md-2">
@@ -284,7 +285,7 @@ class Home extends Component {
                     placeholder="Adultos"
                     name="adults"
                     onChange={this.handleChange}
-                    value={this.state.adults}  
+                    value={this.state.adults}
                   />
                 </div>
                 <div className="form-group col-md-2">
