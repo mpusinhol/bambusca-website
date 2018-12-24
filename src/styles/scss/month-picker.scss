@@ -3,9 +3,11 @@
   font-weight: bold;
   max-width: 30%;
   margin: 1%;
+  border-radius: 5px;
+  color: black;
 
   &:hover {
-    background-color: gray;
+    background-color: #98fd4f;
     color: white;
     cursor: pointer;
   }
@@ -19,6 +21,7 @@
 @mixin selected {
   @include font-style();
   background-color: #98fd4f;
+  color: white;
 }
 
 .month-picker {
