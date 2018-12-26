@@ -39,7 +39,9 @@ class App extends Component {
                         price: bestPrices[key].FullPriceTotal,
                         amountDays: bestPrices[key].TripDays,
                         initialDate: key,
-                        endDate: bestPrices[key].Arrival
+                        endDate: bestPrices[key].Arrival,
+                        isRoundTrip: bestPrices[key].IsRoundTrip,
+                        taxAndFee: bestPrices[key].BestPrice.Tax + bestPrices[key].BestPrice.Fee,
                     })
                 )
 
@@ -59,9 +61,10 @@ class App extends Component {
 
                     <div className="price">
                         R$ {props.event.price}
+                        <p className="tax">Taxas e encargos inclusos</p>
                     </div>
 
-                    <div className="informations">
+                    <div className="informations" style={{display: props.event.isRoundTrip ? 'flex' : 'none' }}>
                         <div className="date">
                             Volta
                         <br />
