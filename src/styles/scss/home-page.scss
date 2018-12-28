@@ -25,15 +25,12 @@
 
   form {
     margin-top: 40px;
-    font-size: 20px;
+    font-size: 22px;
 
-    .month-picker > div > input {
-      width: 100%;
-      height: 39px;
-      border-radius: 4px;
-      border: 1px solid rgb(204, 204, 204);
-      text-align: center;
+    .month-picker-input {
+      font-size: 22px;
       font-family: "Rounded Mplus 1c Medium";
+      pointer-events: none;
     }
 
     .font {
@@ -56,7 +53,7 @@
     }
 
     input::-webkit-input-placeholder {
-      font-size: 20px;
+      font-size: 22px;
       line-height: 3;
     }
 

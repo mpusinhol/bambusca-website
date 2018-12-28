@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
+import 'moment/locale/pt-br';
 import { Input, Button, Form, Label } from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
-import MonthPickerInput from 'react-month-picker-input';
+import Monthpicker from '@compeon/monthpicker';
 
 import Autocomplete from '../autocomplete/index';
 import Loader from '../common/loader';
 
-import ViajanetApi from '../../api/viajanetApi';
+import fetchBestPrices from '../../helpers/viajanetHelper';
+import { capitalizeFirstLetter } from '../../helpers/stringHelper';
 
 import {
   getBestPriceTrip,
@@ -20,8 +22,6 @@ import {
 } from '../../actions/viajanetActions';
 
 import 'react-toastify/dist/ReactToastify.css';
-
-const REQUEST_DATE_MASK = "YYYY-MM-DD";
 
 class Home extends Component {
   constructor(props) {
@@ -55,8 +55,6 @@ class Home extends Component {
     this.validateFields = this.validateFields.bind(this);
     this.renderAlertErrors = this.renderAlertErrors.bind(this);
     this.onBambuscarClicked = this.onBambuscarClicked.bind(this);
-    this.fetchBestPrices = this.fetchBestPrices.bind(this);
-    this.getViajanetBestPriceSync = this.getViajanetBestPriceSync.bind(this);
   }
 
   componentWillReceiveProps = nextProps => {
@@ -73,63 +71,6 @@ class Home extends Component {
       }
     }
   }
-
-  getViajanetBestPriceSync = async (data) => {
-    var PRE_DEFINED_BEST_PRICES_BODY = {
-      LoadLocations: false,
-      LoadAirCompanies: false,
-      OnlyBestAirCompany: false,
-      ResultsAmount: 1
-    };
-
-    PRE_DEFINED_BEST_PRICES_BODY.Origin = data.originIATA;
-    PRE_DEFINED_BEST_PRICES_BODY.Destination = data.destinationIATA;
-    PRE_DEFINED_BEST_PRICES_BODY.StartDeparture = data.departureDate;
-    PRE_DEFINED_BEST_PRICES_BODY.IsRoundTrip = data.isRoundTrip;
-
-    if (data.isRoundTrip) {
-      PRE_DEFINED_BEST_PRICES_BODY.TripDays = data.tripDays;
-    }
-
-    const promise = await ViajanetApi.getBestPriceTrip(PRE_DEFINED_BEST_PRICES_BODY);
-
-    return promise;
-  }
-
-  fetchBestPrices() {
-    const currentDate = moment();
-    let startDate;
-    let promiseArray = [];
-
-    if (this.state.month === currentDate.month() && this.state.year === currentDate.year()) {
-      startDate = moment();
-    } else {
-      startDate = moment(`${this.state.year}-${this.state.month+1}-01`, REQUEST_DATE_MASK);
-    }
-
-    let requestBody = {
-      originIATA: this.state.origin.value.IATA,
-      destinationIATA: this.state.destination.value.IATA,
-      isRoundTrip: this.state.isRoundTrip
-    }
-
-    while(startDate.month() === this.state.month) {
-      requestBody.departureDate = startDate.format(REQUEST_DATE_MASK);
-
-      if (this.state.isRoundTrip) {
-        requestBody.tripDays = [this.state.minDays, this.state.maxDays];
-      }
-
-      const promise = this.getViajanetBestPriceSync(requestBody);
-      promiseArray.push(promise);
-
-      startDate = startDate.add(1, 'day');
-    }
-
-    Promise.all(promiseArray).then(result => {
-      this.props.actions.onGetAllBestPrices(result);
-    });
-  };
 
   validateFields() {
     const { origin, destination, month, year, minDays, maxDays } = this.state;
@@ -182,6 +123,16 @@ class Home extends Component {
         errors.tripDays = "A quantidade mínima de dias de viagem não pode ser maior do que a máxima!";
         formHasErrors = true;
       }
+
+      if (minDays && maxDays) {
+        const parsedMinDays = parseInt(minDays);
+        const parsedMaxDays = parseInt(maxDays);
+
+        if (parsedMinDays > parsedMaxDays) {
+          errors.tripDays = "A quantidade mínima de dias de viagem não pode ser maior do que a máxima!";
+          formHasErrors = true;
+        }
+      }
     }
 
     this.setState({formHasErrors, errors});
@@ -199,7 +150,7 @@ class Home extends Component {
     for (let key in errors) {
       if (errors[key]) {
         errorArray.push(
-          <span style={{fontSize: "18px"}}>
+          <span key={key} style={{fontSize: "18px"}}>
             {errors[key]}
             <br/>
           </span>
@@ -219,7 +170,20 @@ class Home extends Component {
 
     if(errors === undefined) {
       this.setState({isProcessing: true});
-      this.fetchBestPrices();
+
+      const promises = fetchBestPrices({
+        originIATA: this.state.origin.value.IATA,
+        destinationIATA: this.state.destination.value.IATA,
+        isRoundTrip: this.state.isRoundTrip,
+        month: this.state.month,
+        year: this.state.year,
+        minDays: this.state.minDays,
+        maxDays: this.state.maxDays,
+      });
+
+      promises.then(results => {
+        this.props.actions.onGetAllBestPrices(results);
+      });
     } else {
       toast.error(this.renderAlertErrors(errors), {
         position: toast.POSITION.TOP_RIGHT
@@ -232,6 +196,12 @@ class Home extends Component {
   };
 
   render() {
+    const { year } = this.state;
+    let formattedMonth = moment(this.state.month + 1, 'MM').locale("pt-br").format('MMMM');
+    formattedMonth = capitalizeFirstLetter(formattedMonth);
+
+    const monthPickerValue = `${formattedMonth} de ${year}`;
+
     return (
       <div id="home-page">
         { this.state.isProcessing ? <Loader/> : null }
@@ -250,7 +220,7 @@ class Home extends Component {
                   name="inlineRadioOptions"
                   id="inlineRadio1"
                   checked={!this.state.isRoundTrip}
-                  onClick={() => this.setState({isRoundTrip: false})}
+                  onChange={() => this.setState({isRoundTrip: false})}
                 />
                 <Label className="form-check-label check" for="inlineRadio1">Só Ida</Label>
               </div>
@@ -261,7 +231,7 @@ class Home extends Component {
                   name="inlineRadioOptions"
                   id="inlineRadio2"
                   checked={this.state.isRoundTrip}
-                  onClick={() => this.setState({isRoundTrip: true})}
+                  onChange={() => this.setState({isRoundTrip: true})}
                 />
                 <Label className="form-check-label check" for="inlineRadio2">Ida e Volta</Label>
               </div>
@@ -283,15 +253,27 @@ class Home extends Component {
 
               <div className="form-row font">
                 <div className="form-group col-md-6 month-picker">
-                <MonthPickerInput
-                  ref="picker"
-                  year={this.state.year}
-                  month={this.state.month}
-                  closeOnSelect
-                  onChange={(maskedValue, selectedYear, selectedMonth) =>
-                    this.setState({month: selectedMonth, year: selectedYear})
-                  }
-                />
+                <Monthpicker
+                  format='MM.YYYY'
+                  year={parseInt(this.state.year, 10)}
+                  month={parseInt(this.state.month + 1, 10)}
+                  primaryColor="#98fd4f"
+                  locale="pt-br"
+                  className="month-picker"
+                  allowedYears={{after: moment().year() - 1}}
+                  onChange={(selectedYear) => {
+                    const values = selectedYear.split('.');
+                    this.setState({month: values[0] - 1, year: values[1]})
+                  }}
+                >
+                  <Input
+                    type="text"
+                    className="form-control text-center month-picker-input"
+                    placeholder="Selecione o mês da viagem"
+                    value={monthPickerValue}
+                    onChange={() => console.log("")}
+                  />
+                </Monthpicker>
                 </div>
                 <div className="form-group col-md-2">
                   <Input
@@ -300,7 +282,7 @@ class Home extends Component {
                     placeholder="Adultos"
                     name="adults"
                     onChange={this.handleChange}
-                    value={this.state.adults}  
+                    value={this.state.adults}
                   />
                 </div>
                 <div className="form-group col-md-2">

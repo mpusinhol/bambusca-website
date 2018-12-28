@@ -59,16 +59,16 @@ class App extends Component {
             <a href="https://www.w3schools.com/html/" target="_blank" rel="noopener noreferrer" >
                 <div className="cell-content">
 
-                    <div className="price">
+                    <div className="price" style={{fontSize: props.event.isRoundTrip ? '28px' : '32px' }}>
                         R$ {props.event.price}
-                        <p className="tax">Taxas e encargos inclusos</p>
+                        {/* <p className="tax">Taxas e encargos inclusos</p> */}
                     </div>
 
                     <div className="informations" style={{display: props.event.isRoundTrip ? 'flex' : 'none' }}>
                         <div className="date">
                             Volta
                         <br />
-                            {moment(props.event.endDate).locale('pt-br').format("D/MMM")}
+                            {moment(props.event.endDate).locale('pt-br').format("DD/MMM")}
                         </div>
 
                         <div className="date mini-calendar">
@@ -133,6 +133,8 @@ class App extends Component {
                         toolbar={false}
                     />
                 </div>
+                <p className="aditional-informations">*Taxas e encargos inclusos</p>
+                <p className="aditional-informations">*Preço por adulto</p>
             </div>
         );
     }

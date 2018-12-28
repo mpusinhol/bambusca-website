@@ -1,11 +1,35 @@
 import React, { Component } from 'react';
 import AsyncSelect from 'react-select/lib/Async';
+import { createGlobalStyle } from 'styled-components';
 
 import ViajanetApi from '../../api/viajanetApi';
 
+import Raleway from './rounded-mplus-1c-black.ttf';
+
+const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'Rounded Mplus 1c Medium';
+    src: url(${Raleway}) format('truetype');
+  }
+`;
+
 const customStyles = {
-  input: styles => ({ ...styles, width: 500, cursor: "text"}),
-  option: styles => ({ ...styles, fontWeight: "900", cursor: "pointer", fontSize: "18px"})
+  input: styles => ({ ...styles, width: "95%", cursor: "text", fontFamily: "Rounded Mplus 1c Medium"}),
+  control: styles => ({ ...styles, fontFamily: "Rounded Mplus 1c Medium"}),
+  menuList: styles => ({ ...styles, backgroundColor: "#f3f3f3"}),
+  dropdownIndicator: styles => ({ ...styles, backgroundColor: "black"}),
+  placeholder: styles => ({ ...styles, cursor: "text"}),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+    ...styles,
+    fontWeight: "bold",
+    cursor: "pointer",
+    fontSize: "22px",
+    width: "96%",
+    margin: "1% 1% 1% 2%",
+    backgroundColor: isFocused ? "#98fd4f" : "white",
+    color: isFocused ? "black" : "black",
+    borderRadius: "5px",
+  }),
 }
 
 export default class Autocomplete extends Component {
@@ -85,6 +109,7 @@ export default class Autocomplete extends Component {
           colors: {
           ...theme.colors,
             primary25: '#98fd4f',
+            primary: '#98fd4f'
           },
         })}
         onBlur={() => this.setState({something: false})}
