@@ -118,15 +118,10 @@ class Home extends Component {
         errors.toTripDays = "É necessário inserir a quantidade máxima de dias de viagem!";
         formHasErrors = true;
       }
-  
-      if (minDays > maxDays) {
-        errors.tripDays = "A quantidade mínima de dias de viagem não pode ser maior do que a máxima!";
-        formHasErrors = true;
-      }
 
       if (minDays && maxDays) {
-        const parsedMinDays = parseInt(minDays);
-        const parsedMaxDays = parseInt(maxDays);
+        const parsedMinDays = parseInt(minDays, 10);
+        const parsedMaxDays = parseInt(maxDays, 10);
 
         if (parsedMinDays > parsedMaxDays) {
           errors.tripDays = "A quantidade mínima de dias de viagem não pode ser maior do que a máxima!";

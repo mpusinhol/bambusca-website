@@ -42,6 +42,9 @@ class App extends Component {
                         endDate: bestPrices[key].Arrival,
                         isRoundTrip: bestPrices[key].IsRoundTrip,
                         taxAndFee: bestPrices[key].BestPrice.Tax + bestPrices[key].BestPrice.Fee,
+                        origin: bestPrices[key].Origin,
+                        destination: bestPrices[key].Destination,
+                        tripDays: bestPrices[key].TripDays
                     })
                 )
 
@@ -53,6 +56,26 @@ class App extends Component {
             newArray: newArray,
         }
     }
+
+    // onMonthClicked(nextDate) {
+    //     const errors = this.validateFields();
+    
+    //       this.setState({isProcessing: true});
+    
+    //       const promises = fetchBestPrices({
+    //         originIATA: this.state.newArray[0].origin,
+    //         destinationIATA: this.state.newArray[0].destination,
+    //         isRoundTrip: this.state.newArray[0].isRoundTrip,
+    //         month: this.state.month,
+    //         year: this.state.year,
+    //         // minDays: this.state.minDays,
+    //         // maxDays: this.state.maxDays,
+    //       });
+    
+    //       promises.then(results => {
+    //         this.props.actions.onGetAllBestPrices(results);
+    //       });
+    //   }
 
     MyDateCell = props => {
         return (
@@ -133,8 +156,11 @@ class App extends Component {
                         toolbar={false}
                     />
                 </div>
-                <p className="aditional-informations">*Taxas e encargos inclusos</p>
-                <p className="aditional-informations">*Preço por adulto</p>
+                <div className="div-adirional-informations">
+                    <p className="aditional-informations">*Taxas e encargos inclusos</p>
+                    <p className="aditional-informations">*Preço por adulto</p>
+                </div>
+
             </div>
         );
     }

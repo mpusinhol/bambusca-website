@@ -42,12 +42,22 @@ export default function(state = INITIAL_STATE, action) {
 
     case ON_GET_ALL_BEST_PRICES: {
       let { bestPrices, numberOfResultsFound } = state;
+      // let lowestPrice = action.payload.data.BestPricesList[0].FullPriceTotal;
+      // let highestPrice = action.payload.data.BestPricesList[0].FullPriceTotal;
 
       action.payload.forEach(response => {
         if (response.data.BestPricesList) {
           const date = moment(response.data.BestPricesList[0].Departure).format("DD/MM/YYYY");
 
           bestPrices[date] = response.data.BestPricesList[0];
+
+          // if (response.data.BestPricesList[0].FullPriceTotal > highestPrice) {
+          //   highestPrice = response.data.BestPricesList[0].FullPriceTotal;
+          // }
+
+          // if (response.data.BestPricesList[0].FullPriceTotal < lowestPrice) {
+          //   lowestPrice = response.data.BestPricesList[0].FullPriceTotal;
+          // }
 
           numberOfResultsFound++;
         }

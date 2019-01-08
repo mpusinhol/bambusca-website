@@ -8,12 +8,19 @@
         text-decoration: none;
     }
 
-    .aditional-informations{
-        color: white;
-        text-align: center;
-        font-weight: bold;
-        font-size: 24px;
+    .div-adirional-informations{
+        border-bottom: 1px solid white;
+
+        .aditional-informations{
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            margin: auto;
+            background-color: black;
+        }
     }
+    
     
 
     .month {
