@@ -63,7 +63,7 @@ class Home extends Component {
       this.props.actions.resetProcessingFlag();
       this.setState({ isProcessing: false });
 
-      if (nextProps.viajanet.numberOfResultsFound > 0) {
+      if (nextProps.viajanet.bestPrices[`${this.state.month+1}/${this.state.year}`].numberOfResultsFound > 0) {
         toast.success("", {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -187,11 +187,12 @@ class Home extends Component {
         children: this.state.children,
         babies: this.state.babies
       }
+      const searchMonth = `${this.state.month+1}/${this.state.year}`;
 
       const promises = fetchBestPrices(requestData);
 
       promises.then(results => {
-        this.props.actions.onGetAllBestPrices(results);
+        this.props.actions.onGetAllBestPrices(results, searchMonth);
         this.props.actions.saveRequestFormData(requestData);
       });
     } else {

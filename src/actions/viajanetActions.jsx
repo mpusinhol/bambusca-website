@@ -52,8 +52,8 @@ export function onGetBestPriceFailure(error) {
 };
 
 export const ON_GET_ALL_BEST_PRICES = "ON_GET_ALL_BEST_PRICES";
-export function onGetAllBestPrices(response) {
-  return { type: ON_GET_ALL_BEST_PRICES, payload: response };
+export function onGetAllBestPrices(response, searchMonth) {
+  return { type: ON_GET_ALL_BEST_PRICES, payload: response, searchMonth };
 }
 
 export const RESET_PROCESSING_FLAG = "RESET_PROCESSING_FLAG";

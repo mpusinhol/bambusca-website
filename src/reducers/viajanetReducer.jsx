@@ -11,7 +11,6 @@ const INITIAL_STATE = {
   bestPrices: {},
   errors: [],
   hasFinishedProcessing: undefined,
-  numberOfResultsFound: 0,
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -41,23 +40,45 @@ export default function(state = INITIAL_STATE, action) {
     }
 
     case ON_GET_ALL_BEST_PRICES: {
-      let { bestPrices, numberOfResultsFound } = state;
+      let { bestPrices } = state;
+      let numberOfResultsFound = 0;
+      let lowestPrice = Number.POSITIVE_INFINITY;
+      let lowestPriceDate = undefined;
+      let highestPrice = 0;
+      let highestPriceDate = undefined;
+      const keyMonth = action.searchMonth;
+
+      bestPrices[keyMonth] = {};
 
       action.payload.forEach(response => {
         if (response.data.BestPricesList) {
           const date = moment(response.data.BestPricesList[0].Departure).format("DD/MM/YYYY");
+          const totalPrice = response.data.BestPricesList[0].FullPriceTotal;
 
-          bestPrices[date] = response.data.BestPricesList[0];
+          bestPrices[keyMonth][date] = response.data.BestPricesList[0];
+
+          if (totalPrice < lowestPrice) {
+            lowestPrice = totalPrice;
+            lowestPriceDate = date;
+          }
+
+          if (totalPrice > highestPrice) {
+            highestPrice = totalPrice;
+            highestPriceDate = date;
+          }
 
           numberOfResultsFound++;
         }
       });
 
+      bestPrices[keyMonth].highestPriceDate = highestPriceDate;
+      bestPrices[keyMonth].lowestPriceDate = lowestPriceDate;
+      bestPrices[keyMonth].numberOfResultsFound = numberOfResultsFound;
+
       return {
         ...state,
         bestPrices,
         hasFinishedProcessing: true,
-        numberOfResultsFound,
       };
     }
 
