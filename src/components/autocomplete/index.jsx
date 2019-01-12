@@ -6,6 +6,7 @@ import ViajanetApi from '../../api/viajanetApi';
 
 import Raleway from './rounded-mplus-1c-black.ttf';
 
+// eslint-disable-next-line
 const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'Rounded Mplus 1c Medium';
