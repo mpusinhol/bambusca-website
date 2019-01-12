@@ -20,6 +20,7 @@ import {
   onGetAllBestPrices,
   resetProcessingFlag
 } from '../../actions/viajanetActions';
+import { saveRequestFormData } from '../../actions/requestActions';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -60,7 +61,7 @@ class Home extends Component {
   componentWillReceiveProps = nextProps => {
     if (nextProps.viajanet && nextProps.viajanet.hasFinishedProcessing) {
       this.props.actions.resetProcessingFlag();
-      this.setState({isProcessing: false});
+      this.setState({ isProcessing: false });
 
       if (nextProps.viajanet.numberOfResultsFound > 0){
         this.props.history.push('/calendar');
@@ -90,7 +91,7 @@ class Home extends Component {
       errors.origin = "É preciso selecionar a origem!";
       formHasErrors = true;
     }
-    
+
     if (!destination) {
       errors.destination = "É preciso selecionar o destino!";
       formHasErrors = true;
@@ -113,7 +114,7 @@ class Home extends Component {
         errors.fromTripDays = "É necessário inserir a quantidade mínima de dias de viagem!";
         formHasErrors = true;
       }
-  
+
       if (!maxDays) {
         errors.toTripDays = "É necessário inserir a quantidade máxima de dias de viagem!";
         formHasErrors = true;
@@ -130,7 +131,7 @@ class Home extends Component {
       }
     }
 
-    this.setState({formHasErrors, errors});
+    this.setState({ formHasErrors, errors });
 
     if (formHasErrors) {
       return errors;
@@ -145,28 +146,28 @@ class Home extends Component {
     for (let key in errors) {
       if (errors[key]) {
         errorArray.push(
-          <span key={key} style={{fontSize: "18px"}}>
+          <span key={key} style={{ fontSize: "18px" }}>
             {errors[key]}
-            <br/>
+            <br />
           </span>
         );
       }
     }
 
     return (
-    <div>
-      {errorArray}
-    </div>
+      <div>
+        {errorArray}
+      </div>
     );
   }
 
   onBambuscarClicked() {
     const errors = this.validateFields();
 
-    if(errors === undefined) {
-      this.setState({isProcessing: true});
+    if (errors === undefined) {
+      this.setState({ isProcessing: true });
 
-      const promises = fetchBestPrices({
+      const requestData = {
         originIATA: this.state.origin.value.IATA,
         destinationIATA: this.state.destination.value.IATA,
         isRoundTrip: this.state.isRoundTrip,
@@ -174,10 +175,16 @@ class Home extends Component {
         year: this.state.year,
         minDays: this.state.minDays,
         maxDays: this.state.maxDays,
-      });
+        adults: this.state.adults,
+        children: this.state.children,
+        babies: this.state.babies
+      }
+
+      const promises = fetchBestPrices(requestData);
 
       promises.then(results => {
         this.props.actions.onGetAllBestPrices(results);
+        this.props.actions.saveRequestFormData(requestData);
       });
     } else {
       toast.error(this.renderAlertErrors(errors), {
@@ -199,23 +206,23 @@ class Home extends Component {
 
     return (
       <div id="home-page">
-        { this.state.isProcessing ? <Loader/> : null }
-        <ToastContainer autoClose={8000} style={{width: "40%"}}/>
+        {this.state.isProcessing ? <Loader /> : null}
+        <ToastContainer autoClose={8000} style={{ width: "40%" }} />
         <div className="title">
           <h1>Aperte o cinto, sua passagem ideal está na próxima tela.</h1>
           <h1 className="bambusque">Bambusque!</h1>
         </div>
         <div className="row justify-content-center">
-        <div className="col-8">
+          <div className="col-8">
             <Form className="form">
               <div className="form-check form-check-inline radio-margin">
                 <Input
                   className="form-check-input"
-                  type="radio" 
+                  type="radio"
                   name="inlineRadioOptions"
                   id="inlineRadio1"
                   checked={!this.state.isRoundTrip}
-                  onChange={() => this.setState({isRoundTrip: false})}
+                  onChange={() => this.setState({ isRoundTrip: false })}
                 />
                 <Label className="form-check-label check" for="inlineRadio1">Só Ida</Label>
               </div>
@@ -226,7 +233,7 @@ class Home extends Component {
                   name="inlineRadioOptions"
                   id="inlineRadio2"
                   checked={this.state.isRoundTrip}
-                  onChange={() => this.setState({isRoundTrip: true})}
+                  onChange={() => this.setState({ isRoundTrip: true })}
                 />
                 <Label className="form-check-label check" for="inlineRadio2">Ida e Volta</Label>
               </div>
@@ -235,40 +242,40 @@ class Home extends Component {
                 <div className="col">
                   <Autocomplete
                     placeholder="Origem"
-                    onSelectCallback={option => this.setState({origin: option})}
+                    onSelectCallback={option => this.setState({ origin: option })}
                   />
                 </div>
                 <div className="col">
                   <Autocomplete
                     placeholder="Destino"
-                    onSelectCallback={option => this.setState({destination: option})}
+                    onSelectCallback={option => this.setState({ destination: option })}
                   />
                 </div>
               </div>
 
               <div className="form-row font">
                 <div className="form-group col-md-6 month-picker">
-                <Monthpicker
-                  format='MM.YYYY'
-                  year={parseInt(this.state.year, 10)}
-                  month={parseInt(this.state.month + 1, 10)}
-                  primaryColor="#98fd4f"
-                  locale="pt-br"
-                  className="month-picker"
-                  allowedYears={{after: moment().year() - 1}}
-                  onChange={(selectedYear) => {
-                    const values = selectedYear.split('.');
-                    this.setState({month: values[0] - 1, year: values[1]})
-                  }}
-                >
-                  <Input
-                    type="text"
-                    className="form-control text-center month-picker-input"
-                    placeholder="Selecione o mês da viagem"
-                    value={monthPickerValue}
-                    onChange={() => console.log("")}
-                  />
-                </Monthpicker>
+                  <Monthpicker
+                    format='MM.YYYY'
+                    year={parseInt(this.state.year, 10)}
+                    month={parseInt(this.state.month + 1, 10)}
+                    primaryColor="#98fd4f"
+                    locale="pt-br"
+                    className="month-picker"
+                    allowedYears={{ after: moment().year() - 1 }}
+                    onChange={(selectedYear) => {
+                      const values = selectedYear.split('.');
+                      this.setState({ month: values[0] - 1, year: values[1] })
+                    }}
+                  >
+                    <Input
+                      type="text"
+                      className="form-control text-center month-picker-input"
+                      placeholder="Selecione o mês da viagem"
+                      value={monthPickerValue}
+                      onChange={() => console.log("")}
+                    />
+                  </Monthpicker>
                 </div>
                 <div className="form-group col-md-2">
                   <Input
@@ -288,7 +295,7 @@ class Home extends Component {
                     name="children"
                     onChange={this.handleChange}
                     value={this.state.children}
-                    />
+                  />
                 </div>
                 <div className="form-group col-md-2">
                   <Input
@@ -305,7 +312,7 @@ class Home extends Component {
               <p className="how-long">Por quantos dias deseja viajar?</p>
 
 
-              <div className="form-row justify-content-center" style={{marginTop: "15px", marginLeft: "15px"}}>
+              <div className="form-row justify-content-center" style={{ marginTop: "15px", marginLeft: "15px" }}>
                 <div className="align-text-amount">
                   <p>DE</p>
                 </div>
@@ -326,7 +333,7 @@ class Home extends Component {
 
                 <div className="form-group col-md-1">
                   <Input
-                    type="number" 
+                    type="number"
                     className="form-control"
                     name="maxDays"
                     onChange={this.handleChange}
@@ -345,8 +352,8 @@ class Home extends Component {
                   BAMBUSCAR!
                 </Button>
               </div>
-              </Form>
-            </div>
+            </Form>
+          </div>
         </div>
       </div>
     );
@@ -367,6 +374,7 @@ function mapDispatchToProps(dispatch) {
       onGetBestPriceFailure,
       onGetAllBestPrices,
       resetProcessingFlag,
+      saveRequestFormData,
     }), dispatch)
   }
 }
