@@ -179,11 +179,12 @@ class Home extends Component {
         children: this.state.children,
         babies: this.state.babies
       }
+      const searchMonth = `${this.state.month+1}/${this.state.year}`;
 
       const promises = fetchBestPrices(requestData);
 
       promises.then(results => {
-        this.props.actions.onGetAllBestPrices(results);
+        this.props.actions.onGetAllBestPrices(results, searchMonth);
         this.props.actions.saveRequestFormData(requestData);
       });
     } else {
