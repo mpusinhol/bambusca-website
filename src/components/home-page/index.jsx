@@ -63,7 +63,7 @@ class Home extends Component {
       this.props.actions.resetProcessingFlag();
       this.setState({ isProcessing: false });
 
-      if (nextProps.viajanet.numberOfResultsFound > 0){
+      if (nextProps.viajanet.bestPrices[`${this.state.month+1}/${this.state.year}`].numberOfResultsFound > 0) { 
         this.props.history.push('/calendar');
       } else {
         toast.error("Não conseguimos encontrar viagens no momento. Por gentileza, escolha outro destino ou tente mais tarde.", {

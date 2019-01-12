@@ -20,15 +20,81 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        const bestPrices = this.props.viajanet.bestPrices;
-        const newArray = [];
-        var mydate = '';
+        //     const bestPrices = this.props.viajanet.bestPrices;
+        //     const newArray = [];
+        //     var mydate = '';
 
-        console.log("BestPrice Original")
-        console.log(bestPrices)
+        //     console.log("BestPrice Original")
+        //     console.log(bestPrices)
 
-        {
-            Object.keys(this.props.viajanet.bestPrices).map(key => (
+        //     console.log('Request', this.props.request);
+
+        //     {
+        //         Object.keys(this.props.viajanet.bestPrices).map(key => (
+
+        //             (
+        //                 mydate = moment(key, 'DD/MM/YYYY'),
+        //                 moment(mydate).format("MM/DD/YYYY"),
+        //                 newArray.push({
+        //                     start: new Date(mydate),
+        //                     end: new Date(mydate),
+        //                     price: bestPrices[key].FullPriceTotal,
+        //                     amountDays: bestPrices[key].TripDays,
+        //                     initialDate: key,
+        //                     endDate: bestPrices[key].Arrival,
+        //                     isRoundTrip: bestPrices[key].IsRoundTrip,
+        //                     taxAndFee: bestPrices[key].BestPrice.Tax + bestPrices[key].BestPrice.Fee,
+        //                     origin: bestPrices[key].Origin,
+        //                     destination: bestPrices[key].Destination,
+        //                     tripDays: bestPrices[key].TripDays
+        //                 })
+        //             )
+
+        //         ))
+        //     }
+
+        this.state = {
+            // date: new Date(newArray[0].start),
+            // newArray: newArray,
+            bestPrices: undefined,
+        }
+    }
+
+    // onMonthClicked(nextDate) {
+    //     const errors = this.validateFields();
+
+    //       this.setState({isProcessing: true});
+
+    //       const promises = fetchBestPrices({
+    //         originIATA: this.state.newArray[0].origin,
+    //         destinationIATA: this.state.newArray[0].destination,
+    //         isRoundTrip: this.state.newArray[0].isRoundTrip,
+    //         month: this.state.month,
+    //         year: this.state.year,
+    //         // minDays: this.state.minDays,
+    //         // maxDays: this.state.maxDays,
+    //       });
+
+    //       promises.then(results => {
+    //         this.props.actions.onGetAllBestPrices(results);
+    //       });
+    //   }
+
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.request && nextProps.viajanet && nextProps.viajanet.bestPrices) {
+
+            // const newArray = nextProps.viajanet.bestPrices.map(date => )
+
+            const bestPrices = nextProps.viajanet.bestPrices;
+            const newArray = [];
+            var mydate = '';
+
+            // console.log("BestPrice Original")
+            // console.log(bestPrices)
+
+            // console.log('Request', this.nextProps.request);      
+            Object.keys(this.state.bestPrices).map(key => (
 
                 (
                     mydate = moment(key, 'DD/MM/YYYY'),
@@ -49,45 +115,27 @@ class App extends Component {
                 )
 
             ))
-        }
 
-        this.state = {
-            date: new Date(newArray[0].start),
-            newArray: newArray,
+            this.state = {
+                date: new Date(newArray[0].start),
+                newArray: newArray,
+            }
+
         }
     }
 
-    // onMonthClicked(nextDate) {
-    //     const errors = this.validateFields();
-    
-    //       this.setState({isProcessing: true});
-    
-    //       const promises = fetchBestPrices({
-    //         originIATA: this.state.newArray[0].origin,
-    //         destinationIATA: this.state.newArray[0].destination,
-    //         isRoundTrip: this.state.newArray[0].isRoundTrip,
-    //         month: this.state.month,
-    //         year: this.state.year,
-    //         // minDays: this.state.minDays,
-    //         // maxDays: this.state.maxDays,
-    //       });
-    
-    //       promises.then(results => {
-    //         this.props.actions.onGetAllBestPrices(results);
-    //       });
-    //   }
-
     MyDateCell = props => {
+        console.log('MyDateCell');
         return (
             <a href="https://www.w3schools.com/html/" target="_blank" rel="noopener noreferrer" >
                 <div className="cell-content">
 
-                    <div className="price" style={{fontSize: props.event.isRoundTrip ? '28px' : '32px' }}>
+                    <div className="price" style={{ fontSize: props.event.isRoundTrip ? '28px' : '32px' }}>
                         R$ {props.event.price}
                         {/* <p className="tax">Taxas e encargos inclusos</p> */}
                     </div>
 
-                    <div className="informations" style={{display: props.event.isRoundTrip ? 'flex' : 'none' }}>
+                    <div className="informations" style={{ display: props.event.isRoundTrip ? 'flex' : 'none' }}>
                         <div className="date">
                             Volta
                         <br />
@@ -107,68 +155,77 @@ class App extends Component {
         );
     };
 
+
     render() {
-        const components = {
-            eventWrapper: this.MyDateCell
-        };
-        return (
+        if (false) {
+            console.log('State Dentro do Render', this.props.request);
+            const components = {
+                eventWrapper: this.MyDateCell
+            };
+            return (
 
-            <div>
                 <div>
-                    <div className="month">
-                        <Button color="link">Anterior</Button>
+                    <div>
+                        <div className="month">
+                            <Button color="link">Anterior</Button>
 
-                        <FontAwesome.FaAngleLeft />
+                            <FontAwesome.FaAngleLeft />
 
-                        <div className="actual-month">{moment(this.state.date).locale('pt-br').format("MMMM")}</div>
+                            <div className="actual-month">{moment(this.state.date).locale('pt-br').format("MMMM")}</div>
 
-                        <FontAwesome.FaAngleRight />
+                            <FontAwesome.FaAngleRight />
 
-                        <Button color="link">Próximo</Button>
+                            <Button color="link">Próximo</Button>
+                        </div>
+
+                        {/* <div className="day-week">
+                           <span>Dom</span>
+                           <span>Seg</span>
+                           <span>Ter</span>
+                           <span>Qua</span>
+                           <span>Qui</span>
+                           <span>Sex</span>
+                           <span>Sáb</span>
+                        </div> */}
                     </div>
 
-                    {/* <div className="day-week">
-                       <span>Dom</span>
-                       <span>Seg</span>
-                       <span>Ter</span>
-                       <span>Qua</span>
-                       <span>Qui</span>
-                       <span>Sex</span>
-                       <span>Sáb</span>
-                    </div> */}
-                </div>
+                    <div className="calendar">
+                        {/* Se for usar a data atual, não passar date e nem onNavigate 
+                    Localizer é obrigatório
+                */}
+                        <BigCalendar
+                            localizer={localizer}
+                            date={this.state.date}
+                            onNavigate={date => this.setState({ date })}
+                            popup
+                            components={components}
+                            defaultDate={this.state.date}
+                            events={this.state.newArray}
+                            // onSelectEvent={this.openEvent}
+                            view={'month'}
+                            views={['month']}
+                            toolbar={false}
+                        />
+                    </div>
+                    <div className="div-adirional-informations">
+                        <p className="aditional-informations">*Taxas e encargos inclusos</p>
+                        <p className="aditional-informations">*Preço por adulto</p>
+                    </div>
 
-                <div className="calendar">
-                    {/* Se for usar a data atual, não passar date e nem onNavigate 
-                Localizer é obrigatório
-            */}
-                    <BigCalendar
-                        localizer={localizer}
-                        date={this.state.date}
-                        onNavigate={date => this.setState({ date })}
-                        popup
-                        components={components}
-                        defaultDate={this.state.date}
-                        events={this.state.newArray}
-                        // onSelectEvent={this.openEvent}
-                        view={'month'}
-                        views={['month']}
-                        toolbar={false}
-                    />
                 </div>
-                <div className="div-adirional-informations">
-                    <p className="aditional-informations">*Taxas e encargos inclusos</p>
-                    <p className="aditional-informations">*Preço por adulto</p>
-                </div>
+            );
+        } else {
+            return null;
+        }
 
-            </div>
-        );
     }
 }
 
 function mapStateToProps(state) {
+    console.log('State: ', state);
     return {
         viajanet: state.Viajanet,
+        request: state.Request
     };
 };
 
