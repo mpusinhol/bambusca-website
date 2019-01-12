@@ -67,14 +67,6 @@ export default function(state = INITIAL_STATE, action) {
             highestPriceDate = date;
           }
 
-          // if (response.data.BestPricesList[0].FullPriceTotal > highestPrice) {
-          //   highestPrice = response.data.BestPricesList[0].FullPriceTotal;
-          // }
-
-          // if (response.data.BestPricesList[0].FullPriceTotal < lowestPrice) {
-          //   lowestPrice = response.data.BestPricesList[0].FullPriceTotal;
-          // }
-
           numberOfResultsFound++;
         }
       });

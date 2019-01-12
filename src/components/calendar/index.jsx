@@ -20,44 +20,12 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        //     const bestPrices = this.props.viajanet.bestPrices;
-        //     const newArray = [];
-        //     var mydate = '';
-
-        //     console.log("BestPrice Original")
-        //     console.log(bestPrices)
-
-        //     console.log('Request', this.props.request);
-
-        //     {
-        //         Object.keys(this.props.viajanet.bestPrices).map(key => (
-
-        //             (
-        //                 mydate = moment(key, 'DD/MM/YYYY'),
-        //                 moment(mydate).format("MM/DD/YYYY"),
-        //                 newArray.push({
-        //                     start: new Date(mydate),
-        //                     end: new Date(mydate),
-        //                     price: bestPrices[key].FullPriceTotal,
-        //                     amountDays: bestPrices[key].TripDays,
-        //                     initialDate: key,
-        //                     endDate: bestPrices[key].Arrival,
-        //                     isRoundTrip: bestPrices[key].IsRoundTrip,
-        //                     taxAndFee: bestPrices[key].BestPrice.Tax + bestPrices[key].BestPrice.Fee,
-        //                     origin: bestPrices[key].Origin,
-        //                     destination: bestPrices[key].Destination,
-        //                     tripDays: bestPrices[key].TripDays
-        //                 })
-        //             )
-
-        //         ))
-        //     }
-
         this.state = {
-            // date: new Date(newArray[0].start),
-            // newArray: newArray,
-            bestPrices: undefined,
-        }
+            date: undefined,
+            calendarDataArray: [],
+            highestPriceDate: "",
+            lowestPriceDate: "",
+        };
     }
 
     // onMonthClicked(nextDate) {
@@ -66,9 +34,9 @@ class App extends Component {
     //       this.setState({isProcessing: true});
 
     //       const promises = fetchBestPrices({
-    //         originIATA: this.state.newArray[0].origin,
-    //         destinationIATA: this.state.newArray[0].destination,
-    //         isRoundTrip: this.state.newArray[0].isRoundTrip,
+    //         originIATA: this.state.calendarDataArray[0].origin,
+    //         destinationIATA: this.state.calendarDataArray[0].destination,
+    //         isRoundTrip: this.state.calendarDataArray[0].isRoundTrip,
     //         month: this.state.month,
     //         year: this.state.year,
     //         // minDays: this.state.minDays,
@@ -81,44 +49,39 @@ class App extends Component {
     //   }
 
     componentWillReceiveProps(nextProps) {
-
         if (nextProps.request && nextProps.viajanet && nextProps.viajanet.bestPrices) {
+            const keyMonth = `${nextProps.request.month + 1}/${nextProps.request.year}`;
+            let prices = Object.assign({}, nextProps.viajanet.bestPrices[keyMonth]);
 
-            // const newArray = nextProps.viajanet.bestPrices.map(date => )
+            delete prices.lowestPriceDate;
+            delete prices.highestPriceDate;
+            delete prices.numberOfResultsFound;
 
-            const bestPrices = nextProps.viajanet.bestPrices;
-            const newArray = [];
-            var mydate = '';
+            const calendarDataArray = Object.values(prices).map(item => {
+                const departureDate = moment(item.Departure, 'YYYY-MM-DD');
+                const formattedDate = moment(departureDate).format("MM/DD/YYYY");
 
-            // console.log("BestPrice Original")
-            // console.log(bestPrices)
-
-            // console.log('Request', this.nextProps.request);      
-            Object.keys(this.state.bestPrices).map(key => (
-
-                (
-                    mydate = moment(key, 'DD/MM/YYYY'),
-                    moment(mydate).format("MM/DD/YYYY"),
-                    newArray.push({
-                        start: new Date(mydate),
-                        end: new Date(mydate),
-                        price: bestPrices[key].FullPriceTotal,
-                        amountDays: bestPrices[key].TripDays,
-                        initialDate: key,
-                        endDate: bestPrices[key].Arrival,
-                        isRoundTrip: bestPrices[key].IsRoundTrip,
-                        taxAndFee: bestPrices[key].BestPrice.Tax + bestPrices[key].BestPrice.Fee,
-                        origin: bestPrices[key].Origin,
-                        destination: bestPrices[key].Destination,
-                        tripDays: bestPrices[key].TripDays
-                    })
-                )
-
-            ))
+                return {
+                    start: new Date(formattedDate),
+                    end: new Date(formattedDate),
+                    price: item.FullPriceTotal,
+                    amountDays: item.TripDays,
+                    initialDate: departureDate,
+                    endDate: item.Arrival,
+                    isRoundTrip: item.IsRoundTrip,
+                    taxAndFee: item.BestPrice.Tax + item.BestPrice.Fee,
+                    origin: item.Origin,
+                    destination: item.Destination,
+                    tripDays: item.TripDays,
+                    // isHighest: item.date == nextProps.viajanet.bestPrices[keyMonth].highest
+                }
+            })
 
             this.state = {
-                date: new Date(newArray[0].start),
-                newArray: newArray,
+                date: new Date(`1/${keyMonth}`),
+                calendarDataArray,
+                highestPriceDate: nextProps.viajanet.bestPrices[keyMonth].highestPriceDate,
+                lowestPriceDate: nextProps.viajanet.bestPrices[keyMonth].lowestPriceDate,
             }
 
         }
@@ -157,7 +120,7 @@ class App extends Component {
 
 
     render() {
-        if (false) {
+        if (this.state.calendarDataArray.length > 0) {
             console.log('State Dentro do Render', this.props.request);
             const components = {
                 eventWrapper: this.MyDateCell
@@ -200,7 +163,7 @@ class App extends Component {
                             popup
                             components={components}
                             defaultDate={this.state.date}
-                            events={this.state.newArray}
+                            events={this.state.calendarDataArray}
                             // onSelectEvent={this.openEvent}
                             view={'month'}
                             views={['month']}
