@@ -51,7 +51,10 @@ class App extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.request && nextProps.viajanet && nextProps.viajanet.bestPrices) {
             const keyMonth = `${nextProps.request.month + 1}/${nextProps.request.year}`;
+            
             let prices = Object.assign({}, nextProps.viajanet.bestPrices[keyMonth]);
+            let highestPriceDate = nextProps.viajanet.bestPrices[keyMonth].highestPriceDate;
+            let lowestPriceDate = nextProps.viajanet.bestPrices[keyMonth].lowestPriceDate;
 
             delete prices.lowestPriceDate;
             delete prices.highestPriceDate;
@@ -60,7 +63,7 @@ class App extends Component {
             const calendarDataArray = Object.values(prices).map(item => {
                 const departureDate = moment(item.Departure, 'YYYY-MM-DD');
                 const formattedDate = moment(departureDate).format("MM/DD/YYYY");
-
+                
                 return {
                     start: new Date(formattedDate),
                     end: new Date(formattedDate),
@@ -73,7 +76,8 @@ class App extends Component {
                     origin: item.Origin,
                     destination: item.Destination,
                     tripDays: item.TripDays,
-                    // isHighest: item.date == nextProps.viajanet.bestPrices[keyMonth].highest
+                    isHighest: item.FullPriceTotal == nextProps.viajanet.bestPrices[keyMonth][highestPriceDate].FullPriceTotal,
+                    isLowest: item.FullPriceTotal == nextProps.viajanet.bestPrices[keyMonth][lowestPriceDate].FullPriceTotal
                 }
             })
 
@@ -93,7 +97,9 @@ class App extends Component {
             <a href="https://www.w3schools.com/html/" target="_blank" rel="noopener noreferrer" >
                 <div className="cell-content">
 
-                    <div className="price" style={{ fontSize: props.event.isRoundTrip ? '28px' : '32px' }}>
+                    <div className="price" style={{
+                            fontSize: props.event.isRoundTrip ? '28px' : '32px',
+                            color: props.event.isLowest ? '#32CD32' : '#000000' }}>
                         R$ {props.event.price}
                         {/* <p className="tax">Taxas e encargos inclusos</p> */}
                     </div>
