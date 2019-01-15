@@ -25,6 +25,7 @@ class App extends Component {
             calendarDataArray: [],
             highestPriceDate: "",
             lowestPriceDate: "",
+            daysWithPrice: [],
         };
     }
 
@@ -51,7 +52,7 @@ class App extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.request && nextProps.viajanet && nextProps.viajanet.bestPrices) {
             const keyMonth = `${nextProps.request.month + 1}/${nextProps.request.year}`;
-            
+
             let prices = Object.assign({}, nextProps.viajanet.bestPrices[keyMonth]);
             let highestPriceDate = nextProps.viajanet.bestPrices[keyMonth].highestPriceDate;
             let lowestPriceDate = nextProps.viajanet.bestPrices[keyMonth].lowestPriceDate;
@@ -60,10 +61,14 @@ class App extends Component {
             delete prices.highestPriceDate;
             delete prices.numberOfResultsFound;
 
+            let daysWithPrice = [];
+
             const calendarDataArray = Object.values(prices).map(item => {
+                
                 const departureDate = moment(item.Departure, 'YYYY-MM-DD');
                 const formattedDate = moment(departureDate).format("MM/DD/YYYY");
-                
+                daysWithPrice.push(new Date(formattedDate).getDate());
+
                 return {
                     start: new Date(formattedDate),
                     end: new Date(formattedDate),
@@ -76,30 +81,40 @@ class App extends Component {
                     origin: item.Origin,
                     destination: item.Destination,
                     tripDays: item.TripDays,
-                    isHighest: item.FullPriceTotal == nextProps.viajanet.bestPrices[keyMonth][highestPriceDate].FullPriceTotal,
-                    isLowest: item.FullPriceTotal == nextProps.viajanet.bestPrices[keyMonth][lowestPriceDate].FullPriceTotal
+                    isHighest: item.FullPriceTotal === nextProps.viajanet.bestPrices[keyMonth][highestPriceDate].FullPriceTotal,
+                    isLowest: item.FullPriceTotal === nextProps.viajanet.bestPrices[keyMonth][lowestPriceDate].FullPriceTotal
                 }
             })
-
-            this.state = {
-                date: new Date(`1/${keyMonth}`),
+            const splitDate = keyMonth.split('/');
+            this.setState({
+                date: new Date(splitDate[1], splitDate[0] - 1, 1),
                 calendarDataArray,
                 highestPriceDate: nextProps.viajanet.bestPrices[keyMonth].highestPriceDate,
                 lowestPriceDate: nextProps.viajanet.bestPrices[keyMonth].lowestPriceDate,
-            }
+                daysWithPrice,
+            })
+        }
+    }
 
+    getColor(lowest, highest) {
+        if (lowest) {
+            return '#32CD32';
+        } else if (highest) {
+            return '#b20000';
+        } else {
+            return '#000000'
         }
     }
 
     MyDateCell = props => {
-        console.log('MyDateCell');
         return (
             <a href="https://www.w3schools.com/html/" target="_blank" rel="noopener noreferrer" >
                 <div className="cell-content">
 
                     <div className="price" style={{
-                            fontSize: props.event.isRoundTrip ? '28px' : '32px',
-                            color: props.event.isLowest ? '#32CD32' : '#000000' }}>
+                        fontSize: props.event.isRoundTrip ? '28px' : '32px',
+                        color: this.getColor(props.event.isLowest, props.event.isHighest),
+                    }}>
                         R$ {props.event.price}
                         {/* <p className="tax">Taxas e encargos inclusos</p> */}
                     </div>
@@ -124,15 +139,26 @@ class App extends Component {
         );
     };
 
-
     render() {
         if (this.state.calendarDataArray.length > 0) {
-            console.log('State Dentro do Render', this.props.request);
             const components = {
                 eventWrapper: this.MyDateCell
             };
-            return (
+            const customDayPropGetter = (date) => {
 
+                if(!this.state.daysWithPrice.includes(date.getDate())) {
+                    return {
+                        className: 'rbc-off-range-bg',
+                    };
+                } else {
+                    return {};
+                }
+
+            };
+
+            console.log("AAAAAAAA")
+            console.log(this.state.date)
+            return (
                 <div>
                     <div>
                         <div className="month">
@@ -165,7 +191,7 @@ class App extends Component {
                         <BigCalendar
                             localizer={localizer}
                             date={this.state.date}
-                            onNavigate={date => this.setState({ date })}
+                            // onNavigate={date => this.setState({ date })}
                             popup
                             components={components}
                             defaultDate={this.state.date}
@@ -174,6 +200,8 @@ class App extends Component {
                             view={'month'}
                             views={['month']}
                             toolbar={false}
+                            defaultView='month'
+                            dayPropGetter={customDayPropGetter}
                         />
                     </div>
                     <div className="div-adirional-informations">
@@ -191,7 +219,6 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log('State: ', state);
     return {
         viajanet: state.Viajanet,
         request: state.Request
