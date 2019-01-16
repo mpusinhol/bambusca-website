@@ -8,16 +8,36 @@
         text-decoration: none;
     }
 
-    .div-adirional-informations{
-        border-bottom: 1px solid white;
+    .div-aditional-informations {
 
-        .aditional-informations{
+        .aditional-informations-tax {
             color: white;
             text-align: center;
             font-weight: bold;
             font-size: 24px;
             margin: auto;
             background-color: black;
+            width: 25%;
+
+            @media (max-width: 700px) {
+                width: 70%;
+                font-size: 16px;
+            }
+        }
+        .aditional-informations-price {
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            margin: auto;
+            background-color: black;
+            width: 25%;
+            margin-bottom: 20px;
+
+            @media (max-width: 700px) {
+                width: 70%;
+                font-size: 16px;
+            }
         }
     }
     
@@ -33,6 +53,10 @@
         font-size: 26px;
         color: white;
 
+        @media (max-width: 700px) {
+            font-size: 14px;
+        }
+
         .actual-month {
             font-weight: 900;
             text-transform: capitalize;
@@ -43,6 +67,10 @@
             font-size: 26px;
             color: white;
             font-family: "Rounded Mplus 1c Medium";
+
+            @media (max-width: 700px) {
+                font-size: 14px;
+            }
         }
         
     }
@@ -61,6 +89,10 @@
         text-transform: uppercase;
     }
 
+}
+
+.rbc-today {
+    background-color: white;
 }
 
 .rbc-month-header {
@@ -83,6 +115,10 @@
     border-radius: 0.5em;
     height: 1100px;
     overflow: hidden;
+
+    @media (max-width: 400px) {
+        height: 700px
+    }
 }
 
 .cell-content {
@@ -97,6 +133,14 @@
         font-family: "Rounded Mplus 1c Medium";
         color: #4a4a4a;
         font-weight: bold;
+
+        @media (max-width: 400px) {
+            font-size: 10px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        height: 15vh;
     }
 
     .mini-calendar {
@@ -105,13 +149,19 @@
         border-radius: 5px;
         padding-left: 5px;
         padding-right: 5px;
+        @media (max-width: 400px) {
+            display: none;
+        }
     }
 
     .price {
-        font-size: 28px;
-        color: #32CD32;
+        font-size: 32px;
         font-family: "Rounded Mplus 1c Bold";
         font-weight: 700;
+
+        @media (max-width: 400px) {
+            font-size: 12px;
+        }
 
     }
     .informations {

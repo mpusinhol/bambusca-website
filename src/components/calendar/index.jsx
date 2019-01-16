@@ -112,7 +112,7 @@ class App extends Component {
                 <div className="cell-content">
 
                     <div className="price" style={{
-                        fontSize: props.event.isRoundTrip ? '28px' : '32px',
+                        // fontSize: props.event.isRoundTrip ? '28px' : '32px',
                         color: this.getColor(props.event.isLowest, props.event.isHighest),
                     }}>
                         R$ {props.event.price}
@@ -156,8 +156,6 @@ class App extends Component {
 
             };
 
-            console.log("AAAAAAAA")
-            console.log(this.state.date)
             return (
                 <div>
                     <div>
@@ -204,9 +202,9 @@ class App extends Component {
                             dayPropGetter={customDayPropGetter}
                         />
                     </div>
-                    <div className="div-adirional-informations">
-                        <p className="aditional-informations">*Taxas e encargos inclusos</p>
-                        <p className="aditional-informations">*Preço por adulto</p>
+                    <div className="div-aditional-informations">
+                        <p className="aditional-informations-tax">*Taxas e encargos inclusos</p>
+                        <p className="aditional-informations-price">*Preço por adulto</p>
                     </div>
 
                 </div>
