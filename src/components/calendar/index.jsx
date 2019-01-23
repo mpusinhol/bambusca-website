@@ -42,7 +42,8 @@ class Calendar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.request && nextProps.viajanet && nextProps.viajanet.bestPrices) {
+        if (nextProps.request && nextProps.viajanet && nextProps.viajanet.bestPrices &&
+                nextProps.request.month !== undefined && nextProps.request.year !== undefined) {
             console.log('nextProps: ', nextProps.request);
             const keyMonth = `${nextProps.request.month + 1}/${nextProps.request.year}`;
 
@@ -134,6 +135,35 @@ class Calendar extends Component {
         );
     };
 
+    onMonthClicked(event) {
+        let date;
+
+        if (event.target.id === "previous")
+            date = moment(this.state.date).subtract(1, 'months');
+        else
+            date = moment(this.state.date).add(1, 'months');
+
+        const requestData = {
+            originIATA: this.props.request.originIATA,
+            destinationIATA: this.props.request.destinationIATA,
+            isRoundTrip: this.props.request.isRoundTrip,
+            month: moment(date).get('month'),
+            year: this.props.request.year,
+            minDays: this.props.request.minDays,
+            maxDays: this.props.request.maxDays,
+            adults: this.props.request.adults,
+            children: this.props.request.children,
+            babies: this.props.request.babies
+          }
+
+        const promises = fetchBestPrices(requestData);
+
+        promises.then(results => {
+            this.props.actions.onGetAllBestPrices(results, date.format('M/YYYY'));
+            this.props.actions.saveRequestFormData(requestData);
+        });
+    }
+
     render() {
         if (this.state.calendarDataArray.length > 0) {
             const components = {
@@ -155,7 +185,7 @@ class Calendar extends Component {
                 <div>
                     <div>
                         <div className="month">
-                            <Button color="link" onClick={() => this.onMonthClicked(moment(this.state.date).subtract(1,'months'))}>Anterior</Button>
+                            <Button color="link" id="previous" onClick={this.onMonthClicked}>Anterior</Button>
                             
                             <FontAwesome.FaAngleLeft />
 
@@ -163,18 +193,8 @@ class Calendar extends Component {
 
                             <FontAwesome.FaAngleRight />
 
-                            <Button color="link" onClick={() => this.onMonthClicked(moment(this.state.date).add(1,'months'))}>Próximo</Button>
+                            <Button color="link" id="next" onClick={this.onMonthClicked}>Próximo</Button>
                         </div>
-
-                        {/* <div className="day-week">
-                           <span>Dom</span>
-                           <span>Seg</span>
-                           <span>Ter</span>
-                           <span>Qua</span>
-                           <span>Qui</span>
-                           <span>Sex</span>
-                           <span>Sáb</span>
-                        </div> */}
                     </div>
 
                     <div className="calendar">
@@ -208,30 +228,6 @@ class Calendar extends Component {
             return null;
         }
 
-    }
-
-    onMonthClicked(nextDate) {
-
-        const requestData = {
-            originIATA: this.props.request.originIATA,
-            destinationIATA: this.props.request.destinationIATA,
-            isRoundTrip: this.props.request.isRoundTrip,
-            month: moment(nextDate).get('month'),
-            year: this.props.request.year,
-            minDays: this.props.request.minDays,
-            maxDays: this.props.request.maxDays,
-            adults: this.props.request.adults,
-            children: this.props.request.children,
-            babies: this.props.request.babies
-          }
-
-        const promises = fetchBestPrices(requestData);
-
-        promises.then(results => {
-            this.props.actions.onGetAllBestPrices(results, nextDate.format('M/YYYY'));
-            // Ele não chama a função de baixo.
-            this.props.actions.saveRequestFormData(requestData);
-        });
     }
 }
 
