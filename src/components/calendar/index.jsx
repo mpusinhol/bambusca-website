@@ -13,10 +13,20 @@ import * as FontAwesome from 'react-icons/fa'
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
+import fetchBestPrices from '../../helpers/viajanetHelper';
+
+import {
+    getBestPriceTrip,
+    onGetBestPriceSuccess,
+    onGetBestPriceFailure,
+    onGetAllBestPrices
+  } from '../../actions/viajanetActions';
+import { saveRequestFormData } from '../../actions/requestActions';
+
 moment.locale('pt-br');
 const localizer = BigCalendar.momentLocalizer(moment);
 
-class App extends Component {
+class Calendar extends Component {
     constructor(props) {
         super(props);
 
@@ -27,31 +37,16 @@ class App extends Component {
             lowestPriceDate: "",
             daysWithPrice: [],
         };
+
+        this.onMonthClicked = this.onMonthClicked.bind(this);
     }
-
-    // onMonthClicked(nextDate) {
-    //     const errors = this.validateFields();
-
-    //       this.setState({isProcessing: true});
-
-    //       const promises = fetchBestPrices({
-    //         originIATA: this.state.calendarDataArray[0].origin,
-    //         destinationIATA: this.state.calendarDataArray[0].destination,
-    //         isRoundTrip: this.state.calendarDataArray[0].isRoundTrip,
-    //         month: this.state.month,
-    //         year: this.state.year,
-    //         // minDays: this.state.minDays,
-    //         // maxDays: this.state.maxDays,
-    //       });
-
-    //       promises.then(results => {
-    //         this.props.actions.onGetAllBestPrices(results);
-    //       });
-    //   }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.request && nextProps.viajanet && nextProps.viajanet.bestPrices) {
+            console.log('nextProps: ', nextProps.request);
             const keyMonth = `${nextProps.request.month + 1}/${nextProps.request.year}`;
+
+            console.log('keyMonth: ', keyMonth);
 
             let prices = Object.assign({}, nextProps.viajanet.bestPrices[keyMonth]);
             let highestPriceDate = nextProps.viajanet.bestPrices[keyMonth].highestPriceDate;
@@ -160,15 +155,15 @@ class App extends Component {
                 <div>
                     <div>
                         <div className="month">
-                            <Button color="link">Anterior</Button>
-
+                            <Button color="link" onClick={() => this.onMonthClicked(moment(this.state.date).subtract(1,'months'))}>Anterior</Button>
+                            
                             <FontAwesome.FaAngleLeft />
 
                             <div className="actual-month">{moment(this.state.date).locale('pt-br').format("MMMM")}</div>
 
                             <FontAwesome.FaAngleRight />
 
-                            <Button color="link">Próximo</Button>
+                            <Button color="link" onClick={() => this.onMonthClicked(moment(this.state.date).add(1,'months'))}>Próximo</Button>
                         </div>
 
                         {/* <div className="day-week">
@@ -214,6 +209,30 @@ class App extends Component {
         }
 
     }
+
+    onMonthClicked(nextDate) {
+
+        const requestData = {
+            originIATA: this.props.request.originIATA,
+            destinationIATA: this.props.request.destinationIATA,
+            isRoundTrip: this.props.request.isRoundTrip,
+            month: moment(nextDate).get('month'),
+            year: this.props.request.year,
+            minDays: this.props.request.minDays,
+            maxDays: this.props.request.maxDays,
+            adults: this.props.request.adults,
+            children: this.props.request.children,
+            babies: this.props.request.babies
+          }
+
+        const promises = fetchBestPrices(requestData);
+
+        promises.then(results => {
+            this.props.actions.onGetAllBestPrices(results, nextDate.format('M/YYYY'));
+            // Ele não chama a função de baixo.
+            this.props.actions.saveRequestFormData(requestData);
+        });
+    }
 }
 
 function mapStateToProps(state) {
@@ -223,4 +242,16 @@ function mapStateToProps(state) {
     };
 };
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+    return {
+      actions: bindActionCreators(Object.assign({}, {
+        getBestPriceTrip,
+        onGetBestPriceSuccess,
+        onGetBestPriceFailure,
+        onGetAllBestPrices,
+        saveRequestFormData,
+      }), dispatch)
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
