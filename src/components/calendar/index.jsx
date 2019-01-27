@@ -115,14 +115,14 @@ class Calendar extends Component {
         let redirect;
 
         if (props.event.isRoundTrip) {
-            redirect = `https://www.viajanet.com.br/busca/passagens/voos#/${props.event.origin}/${props.event.destination}/RT/`
+            redirect = `https://www.viajanet.com.br/busca/passagens/voos#/${props.event.origin}/${props.event.destination}/RT/${moment(props.event.initialDate).format("DD-MM-Y")}/${moment(props.event.endDate).format("DD-MM-Y")}/-/-/-/${this.props.request.adults}/${this.props.request.children}/${this.props.request.babies}/-/-/-/-`
         }
         else {
-            redirect = `https://www.viajanet.com.br/busca/passagens/voos#/${props.event.origin}/${props.event.destination}/OW/`
+            redirect = `https://www.viajanet.com.br/busca/passagens/voos#/${props.event.origin}/${props.event.destination}/OW/${moment(props.event.initialDate).format("DD-MM-Y")}//-/-/-/${this.props.request.adults}/${this.props.request.children}/${this.props.request.babies}/-/-/-/-`
         }
         
         return (
-            <a href={`https://www.viajanet.com.br/busca/passagens/voos#/${props.event.origin}/${props.event.destination}`} target="_blank" rel="noopener noreferrer" >
+            <a href={redirect} target="_blank" rel="noopener noreferrer" >
                 <div className="cell-content">
 
                     <div className="price" style={{
