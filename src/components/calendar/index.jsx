@@ -4,12 +4,14 @@ import { bindActionCreators } from 'redux';
 
 import { Button } from 'reactstrap';
 import BigCalendar from "react-big-calendar";
-// import moment from "moment";
 
 import * as moment from 'moment';
 import * as locales from 'moment/min/locales';
 
 import * as FontAwesome from 'react-icons/fa'
+
+import { ToastContainer, toast } from 'react-toastify';
+import Loader from '../common/loader';
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
@@ -22,6 +24,8 @@ import {
     onGetAllBestPrices
   } from '../../actions/viajanetActions';
 import { saveRequestFormData } from '../../actions/requestActions';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 moment.locale('pt-br');
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -36,6 +40,7 @@ class Calendar extends Component {
             highestPriceDate: "",
             lowestPriceDate: "",
             daysWithPrice: [],
+            isProcessing: false,
         };
 
         this.onMonthClicked = this.onMonthClicked.bind(this);
@@ -44,14 +49,18 @@ class Calendar extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.request && nextProps.viajanet && nextProps.viajanet.bestPrices &&
                 nextProps.request.month !== undefined && nextProps.request.year !== undefined) {
-            console.log('nextProps: ', nextProps.request);
+            this.setState({ isProcessing: false });
             const keyMonth = `${nextProps.request.month + 1}/${nextProps.request.year}`;
-
-            console.log('keyMonth: ', keyMonth);
 
             let prices = Object.assign({}, nextProps.viajanet.bestPrices[keyMonth]);
             let highestPriceDate = nextProps.viajanet.bestPrices[keyMonth].highestPriceDate;
             let lowestPriceDate = nextProps.viajanet.bestPrices[keyMonth].lowestPriceDate;
+
+            if (prices.numberOfResultsFound <= 0 ) {
+                toast.error("Não conseguimos encontrar viagens no momento. Por gentileza, escolha outro destino ou tente mais tarde.", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+            }
 
             delete prices.lowestPriceDate;
             delete prices.highestPriceDate;
@@ -103,8 +112,17 @@ class Calendar extends Component {
     }
 
     MyDateCell = props => {
+        let redirect;
+
+        if (props.event.isRoundTrip) {
+            redirect = `https://www.viajanet.com.br/busca/passagens/voos#/${props.event.origin}/${props.event.destination}/RT/`
+        }
+        else {
+            redirect = `https://www.viajanet.com.br/busca/passagens/voos#/${props.event.origin}/${props.event.destination}/OW/`
+        }
+        
         return (
-            <a href="https://www.w3schools.com/html/" target="_blank" rel="noopener noreferrer" >
+            <a href={`https://www.viajanet.com.br/busca/passagens/voos#/${props.event.origin}/${props.event.destination}`} target="_blank" rel="noopener noreferrer" >
                 <div className="cell-content">
 
                     <div className="price" style={{
@@ -138,11 +156,20 @@ class Calendar extends Component {
     onMonthClicked(event) {
         let date;
 
-        if (event.target.id === "previous")
+        if (event.target.id === "previous") {
             date = moment(this.state.date).subtract(1, 'months');
-        else
+            if (date.get('month') < moment().get('month') || date.get('year') < moment().get('year')) {
+                toast.error("O mês da viagem não pode ser um mês passado!", {
+                    position: toast.POSITION.TOP_RIGHT
+                });
+                return;
+            }
+            
+        } else {
             date = moment(this.state.date).add(1, 'months');
+        }
 
+        this.setState({ isProcessing: true });
         const requestData = {
             originIATA: this.props.request.originIATA,
             destinationIATA: this.props.request.destinationIATA,
@@ -161,6 +188,10 @@ class Calendar extends Component {
         promises.then(results => {
             this.props.actions.onGetAllBestPrices(results, date.format('M/YYYY'));
             this.props.actions.saveRequestFormData(requestData);
+        })
+        .catch(err => {
+            this.setState({isProcessing: false});
+            toast.error("Não encontramos passagens para o mês requisitado!");
         });
     }
 
@@ -183,6 +214,8 @@ class Calendar extends Component {
 
             return (
                 <div>
+                    {this.state.isProcessing ? <Loader /> : null}
+                    <ToastContainer autoClose={8000} style={{ width: "40%" }} />
                     <div>
                         <div className="month">
                             <Button color="link" id="previous" onClick={this.onMonthClicked}>Anterior</Button>
@@ -204,12 +237,12 @@ class Calendar extends Component {
                         <BigCalendar
                             localizer={localizer}
                             date={this.state.date}
-                            // onNavigate={date => this.setState({ date })}
+                            onNavigate={date => this.setState({ date })}
                             popup
                             components={components}
                             defaultDate={this.state.date}
                             events={this.state.calendarDataArray}
-                            // onSelectEvent={this.openEvent}
+                            onView={'month'}
                             view={'month'}
                             views={['month']}
                             toolbar={false}
