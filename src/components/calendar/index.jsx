@@ -220,11 +220,11 @@ class Calendar extends Component {
                         <div className="month">
                             <Button color="link" id="previous" onClick={this.onMonthClicked}>Anterior</Button>
                             
-                            <FontAwesome.FaAngleLeft />
+                            <FontAwesome.FaAngleLeft style={{cursor: "pointer"}} id="previous" onClick={this.onMonthClicked}/>
 
                             <div className="actual-month">{moment(this.state.date).locale('pt-br').format("MMMM")}</div>
 
-                            <FontAwesome.FaAngleRight />
+                            <FontAwesome.FaAngleRight style={{cursor: "pointer"}} id="next" onClick={this.onMonthClicked}/>
 
                             <Button color="link" id="next" onClick={this.onMonthClicked}>Próximo</Button>
                         </div>
