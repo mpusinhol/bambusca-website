@@ -156,7 +156,7 @@ class Calendar extends Component {
     onMonthClicked(event) {
         let date;
 
-        if (event.target.id === "previous") {
+        if (event === "previous") {
             date = moment(this.state.date).subtract(1, 'months');
             if (date.get('month') < moment().get('month') || date.get('year') < moment().get('year')) {
                 toast.error("O mês da viagem não pode ser um mês passado!", {
@@ -218,15 +218,15 @@ class Calendar extends Component {
                     <ToastContainer autoClose={8000} style={{ width: "40%" }} />
                     <div>
                         <div className="month">
-                            <Button color="link" id="previous" onClick={this.onMonthClicked}>Anterior</Button>
+                            <Button color="link" onClick={() => this.onMonthClicked("previous")}>Anterior</Button>
                             
-                            <FontAwesome.FaAngleLeft style={{cursor: "pointer"}} id="previous" onClick={this.onMonthClicked}/>
+                            <FontAwesome.FaAngleLeft style={{cursor: "pointer"}} onClick={() => this.onMonthClicked("previous")}/>
 
                             <div className="actual-month">{moment(this.state.date).locale('pt-br').format("MMMM")}</div>
 
-                            <FontAwesome.FaAngleRight style={{cursor: "pointer"}} id="next" onClick={this.onMonthClicked}/>
+                            <FontAwesome.FaAngleRight style={{cursor: "pointer"}} onClick={() => this.onMonthClicked("next")}/>
 
-                            <Button color="link" id="next" onClick={this.onMonthClicked}>Próximo</Button>
+                            <Button color="link" onClick={() => this.onMonthClicked("next")}>Próximo</Button>
                         </div>
                     </div>
 
