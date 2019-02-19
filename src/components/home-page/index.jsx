@@ -170,6 +170,8 @@ class Home extends Component {
       const requestData = {
         originIATA: this.state.origin.value.IATA,
         destinationIATA: this.state.destination.value.IATA,
+        originIATADescription: this.state.origin.value.IataDescription,
+        destinationIATADescription: this.state.destination.value.IataDescription,
         isRoundTrip: this.state.isRoundTrip,
         month: this.state.month,
         year: this.state.year,
