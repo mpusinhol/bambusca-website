@@ -195,7 +195,9 @@ class Home extends Component {
   }
 
   handleChange(evt) {
-    this.setState({ [evt.target.name]: evt.target.value });
+    const value = evt.target.value < 0 ? 0 : evt.target.value;
+
+    this.setState({ [evt.target.name]: value });
   };
 
   render() {
