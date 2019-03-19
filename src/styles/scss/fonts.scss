@@ -4,8 +4,18 @@
 }
 
 @font-face {
+  font-family: 'Rounded Mplus 1c Medium';
+  src: url('/assets/fonts/rounded-mplus-1c-medium.ttf');
+}
+
+@font-face {
   font-family: 'Rounded Mplus 1c Light';
-  src: url('/assets/fonts/rounded-mplus-1c.ttf');
+  src: url('/assets/fonts/rounded-mplus-1c-light.ttf');
+}
+
+@font-face {
+  font-family: 'Rounded Mplus 1c Bold';
+  src: url('/assets/fonts/rounded-mplus-1c-bold.ttf');
 }
 
 @font-face {
@@ -31,4 +41,9 @@
 @font-face {
   font-family: 'Raleway Medium';
   src: url('/assets/fonts/Raleway-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('/assets/fonts/raleway.ttf');
 }

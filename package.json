@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@compeon/monthpicker": "^0.2.4",
+    "@compeon/monthpicker": "^0.4.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
     "cldr": "^4.13.0",
