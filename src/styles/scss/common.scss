@@ -86,3 +86,29 @@
 .css-xp4uvy {
   font-family: "Rounded Mplus 1c Medium";
 }
+
+.footer-texts {
+  background-color: white;
+  padding: 50px;
+
+  h1 {
+    font-family: "Rounded Mplus 1c Black";
+  }
+  
+  p {
+    font-family: "Rounded Mplus 1c Medium";
+  }
+}
+
+#footerTexts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0px;
+  padding: 200px;
+
+  background-image: url("/assets/images/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
