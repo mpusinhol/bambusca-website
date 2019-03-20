@@ -24,3 +24,5 @@ yarn-error.log*
 
 .sass-cache
 .vscode
+
+src/styles/css

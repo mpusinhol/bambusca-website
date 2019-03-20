@@ -173,6 +173,8 @@ class Calendar extends Component {
         const requestData = {
             originIATA: this.props.request.originIATA,
             destinationIATA: this.props.request.destinationIATA,
+            originIATADescription: this.props.request.originIATADescription,
+            destinationIATADescription: this.props.request.destinationIATADescription,
             isRoundTrip: this.props.request.isRoundTrip,
             month: moment(date).get('month'),
             year: this.props.request.year,
@@ -217,6 +219,9 @@ class Calendar extends Component {
                     {this.state.isProcessing ? <Loader /> : null}
                     <ToastContainer autoClose={8000} style={{ width: "40%" }} />
                     <div>
+                        <div className="d-flex justify-content-center pt-4 font-weight-bold origin-destiny-show">
+                                {this.props.request.originIATADescription} x {this.props.request.destinationIATADescription}
+                        </div>
                         <div className="month">
                             <Button color="link" onClick={() => this.onMonthClicked("previous")}>Anterior</Button>
                             

@@ -19,6 +19,8 @@ export default function (state = INITIAL_STATE, action) {
       return {
         originIATA: action.payload.originIATA,
         destinationIATA: action.payload.destinationIATA,
+        originIATADescription: action.payload.originIATADescription,
+        destinationIATADescription: action.payload.destinationIATADescription,
         isRoundTrip: action.payload.isRoundTrip,
         month: action.payload.month,
         year: action.payload.year,
