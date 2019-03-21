@@ -34,7 +34,7 @@ class Header extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/">
+                <NavLink href="https://web.facebook.com/Bambusca-401889657015248/">
                   <img alt="Facebook" src="/assets/images/facebook.png"/>
                 </NavLink>
               </NavItem>
@@ -44,7 +44,7 @@ class Header extends Component {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/">
+                <NavLink href="https://www.instagram.com/bambusca_oficial/">
                   <img alt="Instagram" src="/assets/images/instagram.png"/>
                 </NavLink>
               </NavItem>

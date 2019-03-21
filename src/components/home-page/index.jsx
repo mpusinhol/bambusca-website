@@ -29,7 +29,7 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      isRoundTrip: false,
+      isRoundTrip: true,
       origin: undefined,
       destination: undefined,
       month: moment().month(),
@@ -170,6 +170,8 @@ class Home extends Component {
       const requestData = {
         originIATA: this.state.origin.value.IATA,
         destinationIATA: this.state.destination.value.IATA,
+        originIATADescription: this.state.origin.value.IataDescription,
+        destinationIATADescription: this.state.destination.value.IataDescription,
         isRoundTrip: this.state.isRoundTrip,
         month: this.state.month,
         year: this.state.year,
@@ -195,7 +197,9 @@ class Home extends Component {
   }
 
   handleChange(evt) {
-    this.setState({ [evt.target.name]: evt.target.value });
+    const value = evt.target.value < 0 ? 0 : evt.target.value;
+
+    this.setState({ [evt.target.name]: value });
   };
 
   render() {
@@ -310,10 +314,18 @@ class Home extends Component {
                 </div>
               </div>
 
-              <p className="how-long">Por quantos dias deseja viajar?</p>
+              <p
+                className="how-long"
+                style={{display: this.state.isRoundTrip ? "block" : "none"}}
+              >
+                Por quantos dias deseja viajar?
+              </p>
 
 
-              <div className="form-row justify-content-center" style={{ marginTop: "15px", marginLeft: "15px" }}>
+              <div
+                className="form-row justify-content-center"
+                style={{ marginTop: "15px", marginLeft: "15px", display: this.state.isRoundTrip ? "flex" : "none" }}
+              >
                 <div className="align-text-amount">
                   <p>DE</p>
                 </div>

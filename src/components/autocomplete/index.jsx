@@ -28,7 +28,7 @@ const customStyles = {
     width: "96%",
     margin: "1% 1% 1% 2%",
     backgroundColor: isFocused ? "#98fd4f" : "white",
-    color: isFocused ? "black" : "black",
+    color: isFocused ? "black" : "hsl(0,0%,50%)",
     borderRadius: "5px",
   }),
 }
