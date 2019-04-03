@@ -9,7 +9,7 @@ const getViajanetBestPriceSync = async data => {
     LoadLocations: false,
     LoadAirCompanies: false,
     OnlyBestAirCompany: false,
-    ResultsAmount: 100
+    ResultsAmount: 9999
   };
 
   body.Origin = data.originIATA;
